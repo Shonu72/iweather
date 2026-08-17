@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// Main Weather Screen consuming strongly-typed Weather domain models.
+/// Main Weather Screen demonstrating full API pipeline (API -> URLSession -> JSONDecoder -> Weather Model -> ViewModel -> SwiftUI).
 struct WeatherScreen: View {
-    // MARK: - Local UI State (@State)
+    // MARK: - Reactive UI State (@State)
     @State private var viewModel = WeatherViewModel()
     @State private var isSearchPresented = false
     @State private var searchText = ""
@@ -20,6 +20,27 @@ struct WeatherScreen: View {
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
+                    
+                    // MARK: - Error Banner (if API fetch fails)
+                    if let errorMessage = viewModel.errorMessage {
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.yellow)
+                            Text(errorMessage)
+                                .font(.caption)
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Button("Retry") {
+                                Task {
+                                    await viewModel.fetchWeather(for: viewModel.weather.location.city)
+                                }
+                            }
+                            .font(.caption)
+                            .fontWeight(.bold)
+                        }
+                        .padding(12)
+                        .background(Color.red.opacity(0.2), in: RoundedRectangle(cornerRadius: 12))
+                    }
                     
                     // MARK: 1. Location Header + Unit Picker Toggle
                     HStack {
@@ -73,14 +94,43 @@ struct WeatherScreen: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
             }
+            
+            // MARK: - Loading Progress Overlay
+            if viewModel.isLoading {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                    
+                    VStack(spacing: 12) {
+                        ProgressView()
+                            .scaleEffect(1.3)
+                            .tint(.white)
+                        Text("Fetching live weather...")
+                            .font(.subheadline)
+                            .foregroundStyle(.white)
+                    }
+                    .padding(24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(white: 0.15))
+                    )
+                }
+            }
         }
-        // MARK: - Modal Sheet Presentation
+        // MARK: - Async Task Trigger on Screen Load
+        .task {
+            await viewModel.fetchWeather(for: "Bhopal")
+        }
+        // MARK: - Modal Search Sheet
         .sheet(isPresented: $isSearchPresented) {
             SearchView(
                 searchText: $searchText,
-                availableCities: viewModel.availableCities,
-                onSelectCity: { selectedCity in
-                    viewModel.selectCity(selectedCity)
+                searchResults: viewModel.searchResults,
+                onSearchQueryChanged: { query in
+                    await viewModel.searchCities(query: query)
+                },
+                onSelectLocation: { selectedLocation in
+                    await viewModel.fetchWeather(for: selectedLocation)
                 }
             )
         }

@@ -1,27 +1,90 @@
 import Foundation
 import Observation
 
-/// ViewModel for managing weather UI state and city selection using strongly-typed domain models.
+/// ViewModel for managing weather UI state, live API fetching, and geocoding location searches.
+/// `@MainActor` guarantees that state updates happen safely on the Main UI thread (similar to Flutter's WidgetsBinding.instance).
+@MainActor
 @Observable
 final class WeatherViewModel {
+    // MARK: - Reactive UI State
     var weather: Weather
-    var availableCities: [String] = ["Bhopal", "Mumbai", "Delhi", "Bengaluru", "London", "Tokyo"]
+    var isLoading: Bool = false
+    var errorMessage: String? = nil
+    var searchResults: [WeatherLocation] = []
+    var isSearching: Bool = false
     
-    init(weather: Weather = WeatherViewModel.mockData) {
+    private let weatherService: WeatherServiceProtocol
+    
+    init(
+        weather: Weather = WeatherViewModel.mockData,
+        weatherService: WeatherServiceProtocol = URLSessionWeatherService()
+    ) {
         self.weather = weather
+        self.weatherService = weatherService
     }
     
-    /// Action method to switch active city weather data dynamically.
-    func selectCity(_ cityName: String) {
-        self.weather = WeatherViewModel.mockData(for: cityName)
+    // MARK: - Live API Actions
+    
+    /// Fetches live weather for a city name (Geocoding search + Forecast API).
+    func fetchWeather(for cityName: String) async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            let locations = try await weatherService.searchLocations(query: cityName)
+            guard let firstLocation = locations.first else {
+                throw NetworkError.noResultsFound
+            }
+            
+            let liveWeather = try await weatherService.fetchWeather(for: firstLocation)
+            self.weather = liveWeather
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+        
+        isLoading = false
     }
     
-    /// Convenience static mock data for default city ("Bhopal").
+    /// Fetches live weather for a selected WeatherLocation object.
+    func fetchWeather(for location: WeatherLocation) async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            let liveWeather = try await weatherService.fetchWeather(for: location)
+            self.weather = liveWeather
+        } catch {
+            self.errorMessage = error.localizedDescription
+        }
+        
+        isLoading = false
+    }
+    
+    /// Searches for cities in real-time matching user search query.
+    func searchCities(query: String) async {
+        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            self.searchResults = []
+            return
+        }
+        
+        isSearching = true
+        
+        do {
+            let results = try await weatherService.searchLocations(query: query)
+            self.searchResults = results
+        } catch {
+            self.searchResults = []
+        }
+        
+        isSearching = false
+    }
+    
+    // MARK: - Static Mock Data (Fallback & Preview)
+    
     static var mockData: Weather {
         mockData(for: "Bhopal")
     }
     
-    /// Generates strongly-typed mock Weather domain model for a given city.
     static func mockData(for city: String) -> Weather {
         let mockMap: [String: (country: String, lat: Double, lon: Double, temp: Int, feelsLike: Int, condition: WeatherCondition, high: Int, low: Int, humidity: Int, wind: Double, pressure: Int, uv: Int, vis: Double)] = [
             "Bhopal": ("India", 23.2599, 77.4126, 29, 31, .sunny, 32, 24, 68, 12.0, 1012, 6, 10.0),
@@ -35,24 +98,8 @@ final class WeatherViewModel {
         let data = mockMap[city] ?? ("India", 20.0, 78.0, 25, 26, .partlyCloudy, 28, 20, 60, 12.0, 1013, 5, 10.0)
         
         return Weather(
-            location: WeatherLocation(
-                city: city,
-                country: data.country,
-                latitude: data.lat,
-                longitude: data.lon
-            ),
-            current: CurrentWeather(
-                temperature: data.temp,
-                feelsLike: data.feelsLike,
-                highTemperature: data.high,
-                lowTemperature: data.low,
-                condition: data.condition,
-                humidity: data.humidity,
-                windSpeed: data.wind,
-                pressure: data.pressure,
-                uvIndex: data.uv,
-                visibility: data.vis
-            ),
+            location: WeatherLocation(city: city, country: data.country, latitude: data.lat, longitude: data.lon),
+            current: CurrentWeather(temperature: data.temp, feelsLike: data.feelsLike, highTemperature: data.high, lowTemperature: data.low, condition: data.condition, humidity: data.humidity, windSpeed: data.wind, pressure: data.pressure, uvIndex: data.uv, visibility: data.vis),
             hourly: [
                 HourlyForecastItem(time: "12 PM", temperature: data.temp, condition: data.condition),
                 HourlyForecastItem(time: "1 PM", temperature: data.temp + 1, condition: data.condition),
