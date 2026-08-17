@@ -2,7 +2,6 @@ import Foundation
 import Observation
 
 /// ViewModel for managing weather UI state.
-/// Using Swift 5.9's `@Observable` macro (the standard in modern SwiftUI - similar to ChangeNotifier/Riverpod in Flutter).
 @Observable
 final class WeatherViewModel {
     var weatherData: WeatherData
@@ -11,7 +10,7 @@ final class WeatherViewModel {
         self.weatherData = weatherData
     }
     
-    /// Static mock data matching the exact layout requirements.
+    /// Static mock data matching layout requirements.
     static var mockData: WeatherData {
         WeatherData(
             cityName: "Bhopal",
@@ -35,6 +34,12 @@ final class WeatherViewModel {
                 DailyForecast(day: "Fri", systemIconName: "cloud.sun.fill", highTemperature: 30, lowTemperature: 22),
                 DailyForecast(day: "Sat", systemIconName: "cloud.heavyrain.fill", highTemperature: 27, lowTemperature: 21),
                 DailyForecast(day: "Sun", systemIconName: "sun.max.fill", highTemperature: 29, lowTemperature: 22)
+            ],
+            details: [
+                WeatherDetailItem(title: "HUMIDITY", value: "68%", systemIconName: "humidity", description: "The dew point is 21° right now."),
+                WeatherDetailItem(title: "WIND", value: "12 km/h", systemIconName: "wind", description: "NW winds with gusts up to 18 km/h."),
+                WeatherDetailItem(title: "UV INDEX", value: "6 Mod", systemIconName: "sun.max", description: "Moderate risk of harm from unprotected sun exposure."),
+                WeatherDetailItem(title: "AIR QUALITY", value: "42 - Good", systemIconName: "aqi.low", description: "Air quality is satisfactory.")
             ]
         )
     }

@@ -17,6 +17,15 @@ struct DailyForecast: Identifiable {
     let lowTemperature: Int   // e.g. 24
 }
 
+/// Model representing detailed weather metrics (Humidity, Wind, UV, etc.).
+struct WeatherDetailItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let value: String
+    let systemIconName: String
+    let description: String
+}
+
 /// Aggregate model for the current location's weather display.
 struct WeatherData {
     let cityName: String
@@ -26,4 +35,5 @@ struct WeatherData {
     let lowTemperature: Int
     let hourlyForecasts: [HourlyForecast]
     let dailyForecasts: [DailyForecast]
+    let details: [WeatherDetailItem]
 }
