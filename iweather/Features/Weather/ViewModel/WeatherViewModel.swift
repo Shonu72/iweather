@@ -148,7 +148,14 @@ final class WeatherViewModel {
             let liveWeather = try await weatherService.fetchWeather(for: firstLocation)
             self.state = .loaded(liveWeather)
         } catch {
-            self.state = .error(error.localizedDescription)
+            // If searchLocations failed (e.g. offline), try fetching directly for city from disk cache!
+            let fallbackLocation = WeatherLocation(city: cityName, country: "", latitude: 0, longitude: 0)
+            do {
+                let cachedWeather = try await weatherService.fetchWeather(for: fallbackLocation)
+                self.state = .loaded(cachedWeather)
+            } catch {
+                self.state = .error(error.localizedDescription)
+            }
         }
     }
     

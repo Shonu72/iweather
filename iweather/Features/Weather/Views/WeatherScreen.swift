@@ -28,6 +28,21 @@ struct WeatherScreen: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
                         
+                        // MARK: - Offline Mode Banner Indicator
+                        if weather.isFromCache {
+                            HStack(spacing: 8) {
+                                Image(systemName: "wifi.slash")
+                                    .foregroundStyle(.orange)
+                                Text("Offline Mode — Showing Cached Weather")
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(.primary)
+                                Spacer()
+                            }
+                            .padding(10)
+                            .background(Color.orange.opacity(0.2), in: RoundedRectangle(cornerRadius: 10))
+                        }
+                        
                         // 1. Header + Bookmark Toggle + Unit Picker
                         HStack {
                             LocationHeaderView(

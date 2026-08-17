@@ -6,4 +6,5 @@ struct Weather: Codable, Equatable {
     let current: CurrentWeather
     let hourly: [HourlyForecastItem]
     let daily: [DailyForecastItem]
+    var isFromCache: Bool = false
 }
