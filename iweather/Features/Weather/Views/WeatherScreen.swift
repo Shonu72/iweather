@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Main Weather Screen demonstrating SwiftUI State Management (@State, @Binding, @Observable, @Environment).
+/// Main Weather Screen consuming strongly-typed Weather domain models.
 struct WeatherScreen: View {
     // MARK: - Local UI State (@State)
     @State private var viewModel = WeatherViewModel()
@@ -24,7 +24,7 @@ struct WeatherScreen: View {
                     // MARK: 1. Location Header + Unit Picker Toggle
                     HStack {
                         LocationHeaderView(
-                            cityName: viewModel.weatherData.cityName,
+                            location: viewModel.weather.location,
                             onSearchTapped: {
                                 isSearchPresented = true
                             }
@@ -36,19 +36,15 @@ struct WeatherScreen: View {
                         TemperatureUnitPicker(selectedUnit: $selectedUnit)
                     }
                     
-                    // MARK: 2. Current Weather Card (Displays temperature formatted by selectedUnit)
+                    // MARK: 2. Current Weather Card
                     CurrentWeatherCard(
-                        systemIconName: "sun.max.fill",
-                        temperature: viewModel.weatherData.currentTemperature,
-                        condition: viewModel.weatherData.condition,
-                        highTemperature: viewModel.weatherData.highTemperature,
-                        lowTemperature: viewModel.weatherData.lowTemperature,
+                        current: viewModel.weather.current,
                         unit: selectedUnit
                     )
                     
                     // MARK: 3. Hourly Forecast Section
                     HourlyForecastSection(
-                        forecasts: viewModel.weatherData.hourlyForecasts,
+                        forecasts: viewModel.weather.hourly,
                         unit: selectedUnit
                     )
                     .padding(16)
@@ -59,7 +55,7 @@ struct WeatherScreen: View {
                     
                     // MARK: 4. Daily Forecast Section
                     DailyForecastSection(
-                        forecasts: viewModel.weatherData.dailyForecasts,
+                        forecasts: viewModel.weather.daily,
                         unit: selectedUnit
                     )
                     .padding(16)
@@ -70,14 +66,15 @@ struct WeatherScreen: View {
                     
                     // MARK: 5. Weather Details Section
                     WeatherDetailsSection(
-                        details: viewModel.weatherData.details
+                        current: viewModel.weather.current,
+                        unit: selectedUnit
                     )
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
             }
         }
-        // MARK: - Modal Sheet Presentation using @State boolean binding ($isSearchPresented)
+        // MARK: - Modal Sheet Presentation
         .sheet(isPresented: $isSearchPresented) {
             SearchView(
                 searchText: $searchText,

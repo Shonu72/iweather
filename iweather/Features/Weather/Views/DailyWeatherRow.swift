@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// Component representing a single row in the daily forecast list formatted for active unit.
+/// Component representing a single row in the daily forecast list consuming DailyForecastItem model.
 struct DailyWeatherRow: View {
-    let forecast: DailyForecast
+    let forecast: DailyForecastItem
     let showDivider: Bool
     var unit: TemperatureUnit = .celsius
     
@@ -16,7 +16,7 @@ struct DailyWeatherRow: View {
                 
                 Spacer()
                 
-                Image(systemName: forecast.systemIconName)
+                Image(systemName: forecast.condition.systemIconName)
                     .symbolRenderingMode(.multicolor)
                     .font(.title3)
                     .frame(width: 32)
@@ -41,7 +41,7 @@ struct DailyWeatherRow: View {
     ZStack {
         Color.black.ignoresSafeArea()
         DailyWeatherRow(
-            forecast: DailyForecast(day: "Mon", systemIconName: "sun.max.fill", highTemperature: 30, lowTemperature: 24),
+            forecast: DailyForecastItem(day: "Mon", highTemperature: 30, lowTemperature: 24, condition: .sunny),
             showDivider: true,
             unit: .celsius
         )

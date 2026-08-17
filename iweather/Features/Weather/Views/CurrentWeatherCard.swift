@@ -1,26 +1,22 @@
 import SwiftUI
 
-/// Hero card container combining TemperatureView and WeatherConditionView with unit formatting.
+/// Hero card container combining TemperatureView and WeatherConditionView consuming CurrentWeather model.
 struct CurrentWeatherCard: View {
-    let systemIconName: String
-    let temperature: Int
-    let condition: String
-    let highTemperature: Int
-    let lowTemperature: Int
+    let current: CurrentWeather
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
         VStack(spacing: 8) {
             TemperatureView(
-                systemIconName: systemIconName,
-                temperature: temperature,
+                systemIconName: current.condition.systemIconName,
+                temperature: current.temperature,
                 unit: unit
             )
             
             WeatherConditionView(
-                condition: condition,
-                highTemperature: highTemperature,
-                lowTemperature: lowTemperature,
+                condition: current.condition,
+                highTemperature: current.highTemperature,
+                lowTemperature: current.lowTemperature,
                 unit: unit
             )
         }
@@ -33,11 +29,18 @@ struct CurrentWeatherCard: View {
     ZStack {
         Color.black.ignoresSafeArea()
         CurrentWeatherCard(
-            systemIconName: "sun.max.fill",
-            temperature: 29,
-            condition: "Sunny",
-            highTemperature: 32,
-            lowTemperature: 24,
+            current: CurrentWeather(
+                temperature: 29,
+                feelsLike: 31,
+                highTemperature: 32,
+                lowTemperature: 24,
+                condition: .sunny,
+                humidity: 68,
+                windSpeed: 12.0,
+                pressure: 1012,
+                uvIndex: 6,
+                visibility: 10.0
+            ),
             unit: .celsius
         )
     }

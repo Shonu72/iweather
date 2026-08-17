@@ -1,67 +1,74 @@
 import Foundation
 import Observation
 
-/// ViewModel for managing weather UI state and city selection.
+/// ViewModel for managing weather UI state and city selection using strongly-typed domain models.
 @Observable
 final class WeatherViewModel {
-    var weatherData: WeatherData
+    var weather: Weather
     var availableCities: [String] = ["Bhopal", "Mumbai", "Delhi", "Bengaluru", "London", "Tokyo"]
     
-    init(weatherData: WeatherData = WeatherViewModel.mockData) {
-        self.weatherData = weatherData
+    init(weather: Weather = WeatherViewModel.mockData) {
+        self.weather = weather
     }
     
     /// Action method to switch active city weather data dynamically.
     func selectCity(_ cityName: String) {
-        self.weatherData = WeatherViewModel.mockData(for: cityName)
+        self.weather = WeatherViewModel.mockData(for: cityName)
     }
     
     /// Convenience static mock data for default city ("Bhopal").
-    static var mockData: WeatherData {
+    static var mockData: Weather {
         mockData(for: "Bhopal")
     }
     
-    /// Generates mock data customized for a given city.
-    static func mockData(for city: String) -> WeatherData {
-        let cityTemps: [String: (current: Int, condition: String, icon: String, high: Int, low: Int)] = [
-            "Bhopal": (29, "Sunny", "sun.max.fill", 32, 24),
-            "Mumbai": (33, "Humid & Sunny", "sun.max.fill", 35, 27),
-            "Delhi": (36, "Hazy Sunshine", "sun.haze.fill", 39, 29),
-            "Bengaluru": (24, "Partly Cloudy", "cloud.sun.fill", 27, 19),
-            "London": (18, "Light Rain", "cloud.rain.fill", 20, 14),
-            "Tokyo": (26, "Clear Skies", "sun.max.fill", 28, 20)
+    /// Generates strongly-typed mock Weather domain model for a given city.
+    static func mockData(for city: String) -> Weather {
+        let mockMap: [String: (country: String, lat: Double, lon: Double, temp: Int, feelsLike: Int, condition: WeatherCondition, high: Int, low: Int, humidity: Int, wind: Double, pressure: Int, uv: Int, vis: Double)] = [
+            "Bhopal": ("India", 23.2599, 77.4126, 29, 31, .sunny, 32, 24, 68, 12.0, 1012, 6, 10.0),
+            "Mumbai": ("India", 19.0760, 72.8777, 33, 38, .sunny, 35, 27, 82, 16.5, 1008, 8, 8.0),
+            "Delhi": ("India", 28.7041, 77.1025, 36, 40, .haze, 39, 29, 55, 10.0, 1005, 9, 6.0),
+            "Bengaluru": ("India", 12.9716, 77.5946, 24, 24, .partlyCloudy, 27, 19, 60, 14.2, 1015, 5, 10.0),
+            "London": ("United Kingdom", 51.5074, -0.1278, 18, 17, .lightRain, 20, 14, 78, 22.0, 1018, 3, 9.0),
+            "Tokyo": ("Japan", 35.6762, 139.6503, 26, 26, .clear, 28, 20, 50, 11.0, 1020, 7, 10.0)
         ]
         
-        let info = cityTemps[city] ?? (25, "Partly Cloudy", "cloud.sun.fill", 28, 20)
+        let data = mockMap[city] ?? ("India", 20.0, 78.0, 25, 26, .partlyCloudy, 28, 20, 60, 12.0, 1013, 5, 10.0)
         
-        return WeatherData(
-            cityName: city,
-            currentTemperature: info.current,
-            condition: info.condition,
-            highTemperature: info.high,
-            lowTemperature: info.low,
-            hourlyForecasts: [
-                HourlyForecast(time: "12 PM", systemIconName: info.icon, temperature: info.current),
-                HourlyForecast(time: "1 PM", systemIconName: info.icon, temperature: info.current + 1),
-                HourlyForecast(time: "2 PM", systemIconName: "cloud.sun.fill", temperature: info.current + 2),
-                HourlyForecast(time: "3 PM", systemIconName: "cloud.rain.fill", temperature: info.current),
-                HourlyForecast(time: "4 PM", systemIconName: "cloud.bolt.rain.fill", temperature: info.current - 2),
-                HourlyForecast(time: "5 PM", systemIconName: "cloud.sun.fill", temperature: info.current - 1)
+        return Weather(
+            location: WeatherLocation(
+                city: city,
+                country: data.country,
+                latitude: data.lat,
+                longitude: data.lon
+            ),
+            current: CurrentWeather(
+                temperature: data.temp,
+                feelsLike: data.feelsLike,
+                highTemperature: data.high,
+                lowTemperature: data.low,
+                condition: data.condition,
+                humidity: data.humidity,
+                windSpeed: data.wind,
+                pressure: data.pressure,
+                uvIndex: data.uv,
+                visibility: data.vis
+            ),
+            hourly: [
+                HourlyForecastItem(time: "12 PM", temperature: data.temp, condition: data.condition),
+                HourlyForecastItem(time: "1 PM", temperature: data.temp + 1, condition: data.condition),
+                HourlyForecastItem(time: "2 PM", temperature: data.temp + 2, condition: .partlyCloudy),
+                HourlyForecastItem(time: "3 PM", temperature: data.temp, condition: .lightRain),
+                HourlyForecastItem(time: "4 PM", temperature: data.temp - 2, condition: .thunderstorm),
+                HourlyForecastItem(time: "5 PM", temperature: data.temp - 1, condition: .partlyCloudy)
             ],
-            dailyForecasts: [
-                DailyForecast(day: "Mon", systemIconName: info.icon, highTemperature: info.high, lowTemperature: info.low),
-                DailyForecast(day: "Tue", systemIconName: "cloud.sun.fill", highTemperature: info.high + 1, lowTemperature: info.low + 1),
-                DailyForecast(day: "Wed", systemIconName: "cloud.rain.fill", highTemperature: info.high - 2, lowTemperature: info.low - 1),
-                DailyForecast(day: "Thu", systemIconName: "sun.max.fill", highTemperature: info.high + 2, lowTemperature: info.low),
-                DailyForecast(day: "Fri", systemIconName: "cloud.sun.fill", highTemperature: info.high, lowTemperature: info.low - 2),
-                DailyForecast(day: "Sat", systemIconName: "cloud.heavyrain.fill", highTemperature: info.high - 3, lowTemperature: info.low - 3),
-                DailyForecast(day: "Sun", systemIconName: "sun.max.fill", highTemperature: info.high - 1, lowTemperature: info.low - 2)
-            ],
-            details: [
-                WeatherDetailItem(title: "HUMIDITY", value: "68%", systemIconName: "humidity", description: "Dew point is 21° right now."),
-                WeatherDetailItem(title: "WIND", value: "12 km/h", systemIconName: "wind", description: "NW winds with gusts up to 18 km/h."),
-                WeatherDetailItem(title: "UV INDEX", value: "6 Mod", systemIconName: "sun.max", description: "Moderate risk of harm from sun exposure."),
-                WeatherDetailItem(title: "AIR QUALITY", value: "42 - Good", systemIconName: "aqi.low", description: "Air quality is satisfactory.")
+            daily: [
+                DailyForecastItem(day: "Mon", highTemperature: data.high, lowTemperature: data.low, condition: data.condition),
+                DailyForecastItem(day: "Tue", highTemperature: data.high + 1, lowTemperature: data.low + 1, condition: .partlyCloudy),
+                DailyForecastItem(day: "Wed", highTemperature: data.high - 2, lowTemperature: data.low - 1, condition: .lightRain),
+                DailyForecastItem(day: "Thu", highTemperature: data.high + 2, lowTemperature: data.low, condition: .sunny),
+                DailyForecastItem(day: "Fri", highTemperature: data.high, lowTemperature: data.low - 2, condition: .partlyCloudy),
+                DailyForecastItem(day: "Sat", highTemperature: data.high - 3, lowTemperature: data.low - 3, condition: .heavyRain),
+                DailyForecastItem(day: "Sun", highTemperature: data.high - 1, lowTemperature: data.low - 2, condition: .sunny)
             ]
         )
     }

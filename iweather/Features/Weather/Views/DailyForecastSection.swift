@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// Section displaying 7-day weather forecast list formatted for active unit.
+/// Section displaying 7-day weather forecast list consuming DailyForecastItem domain models.
 struct DailyForecastSection: View {
-    let forecasts: [DailyForecast]
+    let forecasts: [DailyForecastItem]
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
@@ -27,7 +27,7 @@ struct DailyForecastSection: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        DailyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").dailyForecasts, unit: .celsius)
+        DailyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").daily, unit: .celsius)
             .padding()
     }
 }

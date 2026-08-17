@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// Section displaying hourly forecasts formatted for active unit.
+/// Section displaying hourly forecasts consuming HourlyForecastItem domain models.
 struct HourlyForecastSection: View {
-    let forecasts: [HourlyForecast]
+    let forecasts: [HourlyForecastItem]
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
@@ -26,7 +26,7 @@ struct HourlyForecastSection: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        HourlyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").hourlyForecasts, unit: .celsius)
+        HourlyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").hourly, unit: .celsius)
             .padding()
     }
 }

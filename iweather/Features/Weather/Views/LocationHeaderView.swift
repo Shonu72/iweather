@@ -1,16 +1,22 @@
 import SwiftUI
 
-/// Top location header displaying city name and search action button.
+/// Top location header displaying city name from WeatherLocation domain model and search action button.
 struct LocationHeaderView: View {
-    let cityName: String
+    let location: WeatherLocation
     var onSearchTapped: (() -> Void)? = nil
     
     var body: some View {
         HStack {
-            Text(cityName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(.primary)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(location.city)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.primary)
+                
+                Text(location.country)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
             
             Spacer()
             
@@ -32,7 +38,9 @@ struct LocationHeaderView: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        LocationHeaderView(cityName: "Bhopal")
-            .padding()
+        LocationHeaderView(
+            location: WeatherLocation(city: "Bhopal", country: "India", latitude: 23.2599, longitude: 77.4126)
+        )
+        .padding()
     }
 }

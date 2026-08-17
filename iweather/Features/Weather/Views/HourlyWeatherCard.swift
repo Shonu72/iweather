@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// Component representing a single hour forecast item formatted for active TemperatureUnit.
+/// Component representing a single hour forecast item consuming HourlyForecastItem model.
 struct HourlyWeatherCard: View {
-    let forecast: HourlyForecast
+    let forecast: HourlyForecastItem
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
@@ -12,7 +12,7 @@ struct HourlyWeatherCard: View {
                 .fontWeight(.medium)
                 .foregroundStyle(.primary)
             
-            Image(systemName: forecast.systemIconName)
+            Image(systemName: forecast.condition.systemIconName)
                 .symbolRenderingMode(.multicolor)
                 .font(.title2)
                 .frame(height: 28)
@@ -28,7 +28,7 @@ struct HourlyWeatherCard: View {
     ZStack {
         Color.black.ignoresSafeArea()
         HourlyWeatherCard(
-            forecast: HourlyForecast(time: "12 PM", systemIconName: "sun.max.fill", temperature: 29),
+            forecast: HourlyForecastItem(time: "12 PM", temperature: 29, condition: .sunny),
             unit: .celsius
         )
         .padding()
