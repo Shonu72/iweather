@@ -20,7 +20,7 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
 
 <p align="center">
   <a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share" target="_blank">
-    <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="85%" alt="iWeather iOS Demo Video" />
+    <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="25%" alt="iWeather iOS Demo Video" />
   </a>
 </p>
 
