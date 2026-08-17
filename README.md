@@ -35,6 +35,9 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
 - **Frameworks**: SwiftUI, SwiftData, CoreLocation, Observation (`@Observable`)
 - **Networking**: `URLSession` async/await with generic `APIRequest` protocol
 - **Architecture**: Scalable Layered MVVM
+  
+## Architecture Snapshot
+<img width="879" height="431" alt="Screenshot 2026-08-17 at 3 05 07 PM" src="https://github.com/user-attachments/assets/b95db6aa-e6bd-45b4-bfd0-9c9074a52bb4" />
 
 ---
 
