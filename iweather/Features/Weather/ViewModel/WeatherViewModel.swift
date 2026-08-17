@@ -33,8 +33,8 @@ final class WeatherViewModel {
     
     init(
         initialState: WeatherState = .idle,
-        weatherService: WeatherServiceProtocol = WeatherService(),
-        locationManager: LocationManagerProtocol = LocationManager()
+        weatherService: WeatherServiceProtocol = AppContainer.shared.weatherService,
+        locationManager: LocationManagerProtocol = AppContainer.shared.locationManager
     ) {
         self.state = initialState
         self.weatherService = weatherService
