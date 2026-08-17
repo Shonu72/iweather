@@ -1,12 +1,9 @@
 import SwiftUI
 
-/// Main Weather Screen demonstrating full API pipeline (API -> URLSession -> JSONDecoder -> Weather Model -> ViewModel -> SwiftUI).
+/// Main Weather Screen adhering to pure MVVM architecture.
+/// View responsibility: Declarative layout only. All UI state & user intent actions are owned by WeatherViewModel.
 struct WeatherScreen: View {
-    // MARK: - Reactive UI State (@State)
     @State private var viewModel = WeatherViewModel()
-    @State private var isSearchPresented = false
-    @State private var searchText = ""
-    @State private var selectedUnit: TemperatureUnit = .celsius
     
     var body: some View {
         ZStack {
@@ -21,7 +18,7 @@ struct WeatherScreen: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
                     
-                    // MARK: - Error Banner (if API fetch fails)
+                    // MARK: - Error Banner State
                     if let errorMessage = viewModel.errorMessage {
                         HStack {
                             Image(systemName: "exclamationmark.triangle.fill")
@@ -32,7 +29,7 @@ struct WeatherScreen: View {
                             Spacer()
                             Button("Retry") {
                                 Task {
-                                    await viewModel.fetchWeather(for: viewModel.weather.location.city)
+                                    await viewModel.retryFetch()
                                 }
                             }
                             .font(.caption)
@@ -42,31 +39,36 @@ struct WeatherScreen: View {
                         .background(Color.red.opacity(0.2), in: RoundedRectangle(cornerRadius: 12))
                     }
                     
-                    // MARK: 1. Location Header + Unit Picker Toggle
+                    // MARK: 1. Location Header + Temperature Unit Picker
                     HStack {
                         LocationHeaderView(
                             location: viewModel.weather.location,
                             onSearchTapped: {
-                                isSearchPresented = true
+                                viewModel.openSearchSheet()
                             }
                         )
                         
                         Spacer()
                         
-                        // Segmented control modifying selectedUnit state via @Binding
-                        TemperatureUnitPicker(selectedUnit: $selectedUnit)
+                        // Binding TemperatureUnitPicker to viewModel state
+                        TemperatureUnitPicker(
+                            selectedUnit: Binding(
+                                get: { viewModel.selectedUnit },
+                                set: { viewModel.setTemperatureUnit($0) }
+                            )
+                        )
                     }
                     
                     // MARK: 2. Current Weather Card
                     CurrentWeatherCard(
                         current: viewModel.weather.current,
-                        unit: selectedUnit
+                        unit: viewModel.selectedUnit
                     )
                     
                     // MARK: 3. Hourly Forecast Section
                     HourlyForecastSection(
                         forecasts: viewModel.weather.hourly,
-                        unit: selectedUnit
+                        unit: viewModel.selectedUnit
                     )
                     .padding(16)
                     .background(
@@ -77,7 +79,7 @@ struct WeatherScreen: View {
                     // MARK: 4. Daily Forecast Section
                     DailyForecastSection(
                         forecasts: viewModel.weather.daily,
-                        unit: selectedUnit
+                        unit: viewModel.selectedUnit
                     )
                     .padding(16)
                     .background(
@@ -88,14 +90,14 @@ struct WeatherScreen: View {
                     // MARK: 5. Weather Details Section
                     WeatherDetailsSection(
                         current: viewModel.weather.current,
-                        unit: selectedUnit
+                        unit: viewModel.selectedUnit
                     )
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
             }
             
-            // MARK: - Loading Progress Overlay
+            // MARK: - Loading Progress Overlay State
             if viewModel.isLoading {
                 ZStack {
                     Color.black.opacity(0.4)
@@ -117,22 +119,13 @@ struct WeatherScreen: View {
                 }
             }
         }
-        // MARK: - Async Task Trigger on Screen Load
+        // MARK: - Async Initializer Intent Trigger
         .task {
-            await viewModel.fetchWeather(for: "Bhopal")
+            await viewModel.onAppear()
         }
-        // MARK: - Modal Search Sheet
-        .sheet(isPresented: $isSearchPresented) {
-            SearchView(
-                searchText: $searchText,
-                searchResults: viewModel.searchResults,
-                onSearchQueryChanged: { query in
-                    await viewModel.searchCities(query: query)
-                },
-                onSelectLocation: { selectedLocation in
-                    await viewModel.fetchWeather(for: selectedLocation)
-                }
-            )
+        // MARK: - Sheet Presentation State Bound to ViewModel
+        .sheet(isPresented: $viewModel.isSearchSheetPresented) {
+            SearchView(viewModel: viewModel)
         }
         .preferredColorScheme(.dark)
     }

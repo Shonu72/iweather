@@ -1,15 +1,20 @@
 import Foundation
 import Observation
 
-/// ViewModel for managing weather UI state, live API fetching, and geocoding location searches.
-/// `@MainActor` guarantees that UI state updates happen safely on the Main thread.
+/// ViewModel for managing screen UI state, location search state, temperature unit preference, and user intent actions.
+/// `@MainActor` guarantees that state updates happen safely on the Main thread.
 @MainActor
 @Observable
 final class WeatherViewModel {
-    // MARK: - Reactive UI State
+    // MARK: - Main Screen State
     var weather: Weather
+    var selectedUnit: TemperatureUnit = .celsius
     var isLoading: Bool = false
     var errorMessage: String? = nil
+    
+    // MARK: - Search Modal State
+    var isSearchSheetPresented: Bool = false
+    var searchQuery: String = ""
     var searchResults: [WeatherLocation] = []
     var isSearching: Bool = false
     
@@ -23,10 +28,66 @@ final class WeatherViewModel {
         self.weatherService = weatherService
     }
     
-    // MARK: - Live API Actions
+    // MARK: - User Intent Actions
     
-    /// Fetches live weather for a city name (Geocoding search + Forecast API).
-    func fetchWeather(for cityName: String) async {
+    /// Triggered when the view appears on screen.
+    func onAppear() async {
+        await fetchWeather(for: "Bhopal")
+    }
+    
+    /// Triggered when user selects a location from the search sheet.
+    func selectLocation(_ location: WeatherLocation) async {
+        isSearchSheetPresented = false
+        searchQuery = ""
+        searchResults = []
+        await fetchWeather(for: location)
+    }
+    
+    /// Triggered when user types in the search query textfield.
+    func updateSearchQuery(_ query: String) async {
+        self.searchQuery = query
+        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            self.searchResults = []
+            return
+        }
+        
+        isSearching = true
+        
+        do {
+            let results = try await weatherService.searchLocations(query: query)
+            self.searchResults = results
+        } catch {
+            self.searchResults = []
+        }
+        
+        isSearching = false
+    }
+    
+    /// Triggered when user toggles °C / °F temperature unit picker.
+    func setTemperatureUnit(_ unit: TemperatureUnit) {
+        self.selectedUnit = unit
+    }
+    
+    /// Triggered when user taps the retry button on error banner.
+    func retryFetch() async {
+        await fetchWeather(for: weather.location)
+    }
+    
+    /// Triggered when user taps search button to open search sheet.
+    func openSearchSheet() {
+        isSearchSheetPresented = true
+    }
+    
+    /// Triggered when user closes search sheet.
+    func closeSearchSheet() {
+        isSearchSheetPresented = false
+        searchQuery = ""
+        searchResults = []
+    }
+    
+    // MARK: - Private API Data Fetching
+    
+    private func fetchWeather(for cityName: String) async {
         isLoading = true
         errorMessage = nil
         
@@ -45,8 +106,7 @@ final class WeatherViewModel {
         isLoading = false
     }
     
-    /// Fetches live weather for a selected WeatherLocation object.
-    func fetchWeather(for location: WeatherLocation) async {
+    private func fetchWeather(for location: WeatherLocation) async {
         isLoading = true
         errorMessage = nil
         
@@ -60,26 +120,7 @@ final class WeatherViewModel {
         isLoading = false
     }
     
-    /// Searches for cities in real-time matching user search query.
-    func searchCities(query: String) async {
-        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            self.searchResults = []
-            return
-        }
-        
-        isSearching = true
-        
-        do {
-            let results = try await weatherService.searchLocations(query: query)
-            self.searchResults = results
-        } catch {
-            self.searchResults = []
-        }
-        
-        isSearching = false
-    }
-    
-    // MARK: - Static Mock Data (Non-isolated for thread safety across Previews & Inits)
+    // MARK: - Static Mock Data (Non-isolated for thread safety)
     
     nonisolated static var mockData: Weather {
         mockData(for: "Bhopal")

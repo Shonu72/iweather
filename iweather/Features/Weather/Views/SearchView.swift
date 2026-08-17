@@ -1,13 +1,9 @@
 import SwiftUI
 
-/// Search modal sheet querying live Geocoding API with `@Binding` and `@Environment(\.dismiss)`.
+/// Search modal sheet consuming WeatherViewModel in MVVM architecture.
 struct SearchView: View {
     @Environment(\.dismiss) private var dismiss
-    
-    @Binding var searchText: String
-    let searchResults: [WeatherLocation]
-    let onSearchQueryChanged: (String) async -> Void
-    let onSelectLocation: (WeatherLocation) async -> Void
+    @Bindable var viewModel: WeatherViewModel
     
     private let defaultCities = [
         WeatherLocation(city: "Bhopal", country: "India", latitude: 23.2599, longitude: 77.4126),
@@ -21,28 +17,28 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             List {
-                if searchText.isEmpty {
+                if viewModel.searchQuery.isEmpty {
                     Section("Popular Cities") {
                         ForEach(defaultCities, id: \.city) { location in
                             locationRow(location: location)
                         }
                     }
-                } else if searchResults.isEmpty {
+                } else if viewModel.searchResults.isEmpty {
                     Section {
-                        ContentUnavailableView.search(text: searchText)
+                        ContentUnavailableView.search(text: viewModel.searchQuery)
                     }
                 } else {
                     Section("Search Results") {
-                        ForEach(searchResults, id: \.city) { location in
+                        ForEach(viewModel.searchResults, id: \.city) { location in
                             locationRow(location: location)
                         }
                     }
                 }
             }
-            .searchable(text: $searchText, prompt: "Search city name...")
-            .onChange(of: searchText) { oldValue, newValue in
+            .searchable(text: $viewModel.searchQuery, prompt: "Search city name...")
+            .onChange(of: viewModel.searchQuery) { _, newQuery in
                 Task {
-                    await onSearchQueryChanged(newValue)
+                    await viewModel.updateSearchQuery(newQuery)
                 }
             }
             .navigationTitle("Select Location")
@@ -50,6 +46,7 @@ struct SearchView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
+                        viewModel.closeSearchSheet()
                         dismiss()
                     }
                     .fontWeight(.semibold)
@@ -62,7 +59,7 @@ struct SearchView: View {
     private func locationRow(location: WeatherLocation) -> some View {
         Button {
             Task {
-                await onSelectLocation(location)
+                await viewModel.selectLocation(location)
                 dismiss()
             }
         } label: {
@@ -93,10 +90,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(
-        searchText: .constant(""),
-        searchResults: [],
-        onSearchQueryChanged: { _ in },
-        onSelectLocation: { _ in }
-    )
+    SearchView(viewModel: WeatherViewModel())
 }
