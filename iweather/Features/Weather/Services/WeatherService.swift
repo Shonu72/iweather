@@ -1,0 +1,78 @@
+import Foundation
+
+// MARK: - Open-Meteo API Requests
+
+struct GeocodingRequest: APIRequest {
+    typealias Response = GeocodingResponseDTO
+    
+    let host = "geocoding-api.open-meteo.com"
+    let path = "/v1/search"
+    let queryItems: [URLQueryItem]?
+    
+    init(cityName: String) {
+        self.queryItems = [
+            URLQueryItem(name: "name", value: cityName),
+            URLQueryItem(name: "count", value: "10"),
+            URLQueryItem(name: "language", value: "en"),
+            URLQueryItem(name: "format", value: "json")
+        ]
+    }
+}
+
+struct ForecastRequest: APIRequest {
+    typealias Response = OpenMeteoForecastDTO
+    
+    let host = "api.open-meteo.com"
+    let path = "/v1/forecast"
+    let queryItems: [URLQueryItem]?
+    
+    init(latitude: Double, longitude: Double) {
+        self.queryItems = [
+            URLQueryItem(name: "latitude", value: "\(latitude)"),
+            URLQueryItem(name: "longitude", value: "\(longitude)"),
+            URLQueryItem(name: "current", value: "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,surface_pressure,wind_speed_10m,uv_index"),
+            URLQueryItem(name: "hourly", value: "temperature_2m,weather_code"),
+            URLQueryItem(name: "daily", value: "weather_code,temperature_2m_max,temperature_2m_min"),
+            URLQueryItem(name: "timezone", value: "auto")
+        ]
+    }
+}
+
+// MARK: - Weather Service Interface & Implementation
+
+protocol WeatherServiceProtocol {
+    func searchLocations(query: String) async throws -> [WeatherLocation]
+    func fetchWeather(for location: WeatherLocation) async throws -> Weather
+}
+
+final class WeatherService: WeatherServiceProtocol {
+    private let client: NetworkClientProtocol
+    
+    init(client: NetworkClientProtocol = URLSessionNetworkClient()) {
+        self.client = client
+    }
+    
+    func searchLocations(query: String) async throws -> [WeatherLocation] {
+        let request = GeocodingRequest(cityName: query)
+        let dto = try await client.execute(request)
+        
+        guard let results = dto.results, !results.isEmpty else {
+            return []
+        }
+        
+        return results.map { item in
+            WeatherLocation(
+                city: item.name,
+                country: item.country ?? "",
+                latitude: item.latitude,
+                longitude: item.longitude
+            )
+        }
+    }
+    
+    func fetchWeather(for location: WeatherLocation) async throws -> Weather {
+        let request = ForecastRequest(latitude: location.latitude, longitude: location.longitude)
+        let dto = try await client.execute(request)
+        return WeatherMapper.map(dto: dto, location: location)
+    }
+}

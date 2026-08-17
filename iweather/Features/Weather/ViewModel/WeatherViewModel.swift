@@ -17,7 +17,7 @@ final class WeatherViewModel {
     
     init(
         weather: Weather? = nil,
-        weatherService: WeatherServiceProtocol = URLSessionWeatherService()
+        weatherService: WeatherServiceProtocol = WeatherService()
     ) {
         self.weather = weather ?? WeatherViewModel.mockData
         self.weatherService = weatherService
@@ -88,7 +88,7 @@ final class WeatherViewModel {
     nonisolated static func mockData(for city: String) -> Weather {
         let mockMap: [String: (country: String, lat: Double, lon: Double, temp: Int, feelsLike: Int, condition: WeatherCondition, high: Int, low: Int, humidity: Int, wind: Double, pressure: Int, uv: Int, vis: Double)] = [
             "Bhopal": ("India", 23.2599, 77.4126, 29, 31, .sunny, 32, 24, 68, 12.0, 1012, 6, 10.0),
-            "Mumbai": ("India", 19.0760, 72.8777, 33, 38, .sunny, 35, 27, 82, 16.5, 1008, 8, 8.0),
+            "Mumbai": ("India", 19.0760, 72.8777, 33, 38, .sunny, 35, 27, 82, 16.5, 1008, 8, 10.0),
             "Delhi": ("India", 28.7041, 77.1025, 36, 40, .haze, 39, 29, 55, 10.0, 1005, 9, 6.0),
             "Bengaluru": ("India", 12.9716, 77.5946, 24, 24, .partlyCloudy, 27, 19, 60, 14.2, 1015, 5, 10.0),
             "London": ("United Kingdom", 51.5074, -0.1278, 18, 17, .lightRain, 20, 14, 78, 22.0, 1018, 3, 9.0),
