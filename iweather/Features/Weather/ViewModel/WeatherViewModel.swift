@@ -1,16 +1,14 @@
 import Foundation
 import Observation
 
-/// ViewModel for managing screen UI state, location search state, temperature unit preference, and user intent actions.
+/// ViewModel for managing screen UI state transitions using explicit WeatherState enum.
 /// `@MainActor` guarantees that state updates happen safely on the Main thread.
 @MainActor
 @Observable
 final class WeatherViewModel {
-    // MARK: - Main Screen State
-    var weather: Weather
+    // MARK: - Explicit State Machine
+    var state: WeatherState = .idle
     var selectedUnit: TemperatureUnit = .celsius
-    var isLoading: Bool = false
-    var errorMessage: String? = nil
     
     // MARK: - Search Modal State
     var isSearchSheetPresented: Bool = false
@@ -20,11 +18,21 @@ final class WeatherViewModel {
     
     private let weatherService: WeatherServiceProtocol
     
+    /// Convenient accessor to extract loaded weather or mock fallback.
+    var currentDisplayWeather: Weather {
+        switch state {
+        case .loaded(let weather):
+            return weather
+        default:
+            return WeatherViewModel.mockData
+        }
+    }
+    
     init(
-        weather: Weather? = nil,
+        initialState: WeatherState = .idle,
         weatherService: WeatherServiceProtocol = WeatherService()
     ) {
-        self.weather = weather ?? WeatherViewModel.mockData
+        self.state = initialState
         self.weatherService = weatherService
     }
     
@@ -35,7 +43,7 @@ final class WeatherViewModel {
         await fetchWeather(for: "Bhopal")
     }
     
-    /// Triggered when user selects a location from the search sheet.
+    /// Triggered when user selects a location from search sheet.
     func selectLocation(_ location: WeatherLocation) async {
         isSearchSheetPresented = false
         searchQuery = ""
@@ -43,7 +51,7 @@ final class WeatherViewModel {
         await fetchWeather(for: location)
     }
     
-    /// Triggered when user types in the search query textfield.
+    /// Triggered when user types in search query textfield.
     func updateSearchQuery(_ query: String) async {
         self.searchQuery = query
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
@@ -63,17 +71,21 @@ final class WeatherViewModel {
         isSearching = false
     }
     
-    /// Triggered when user toggles °C / °F temperature unit picker.
+    /// Triggered when user toggles °C / °F unit picker.
     func setTemperatureUnit(_ unit: TemperatureUnit) {
         self.selectedUnit = unit
     }
     
-    /// Triggered when user taps the retry button on error banner.
+    /// Triggered when user taps Retry on error screen.
     func retryFetch() async {
-        await fetchWeather(for: weather.location)
+        if case .loaded(let currentWeather) = state {
+            await fetchWeather(for: currentWeather.location)
+        } else {
+            await fetchWeather(for: "Bhopal")
+        }
     }
     
-    /// Triggered when user taps search button to open search sheet.
+    /// Triggered when user opens search sheet.
     func openSearchSheet() {
         isSearchSheetPresented = true
     }
@@ -88,8 +100,7 @@ final class WeatherViewModel {
     // MARK: - Private API Data Fetching
     
     private func fetchWeather(for cityName: String) async {
-        isLoading = true
-        errorMessage = nil
+        state = .loading
         
         do {
             let locations = try await weatherService.searchLocations(query: cityName)
@@ -98,29 +109,24 @@ final class WeatherViewModel {
             }
             
             let liveWeather = try await weatherService.fetchWeather(for: firstLocation)
-            self.weather = liveWeather
+            self.state = .loaded(liveWeather)
         } catch {
-            self.errorMessage = error.localizedDescription
+            self.state = .error(error.localizedDescription)
         }
-        
-        isLoading = false
     }
     
     private func fetchWeather(for location: WeatherLocation) async {
-        isLoading = true
-        errorMessage = nil
+        state = .loading
         
         do {
             let liveWeather = try await weatherService.fetchWeather(for: location)
-            self.weather = liveWeather
+            self.state = .loaded(liveWeather)
         } catch {
-            self.errorMessage = error.localizedDescription
+            self.state = .error(error.localizedDescription)
         }
-        
-        isLoading = false
     }
     
-    // MARK: - Static Mock Data (Non-isolated for thread safety)
+    // MARK: - Static Mock Data (Non-isolated)
     
     nonisolated static var mockData: Weather {
         mockData(for: "Bhopal")

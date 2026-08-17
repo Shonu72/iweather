@@ -1,7 +1,6 @@
 import SwiftUI
 
-/// Main Weather Screen adhering to pure MVVM architecture.
-/// View responsibility: Declarative layout only. All UI state & user intent actions are owned by WeatherViewModel.
+/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error).
 struct WeatherScreen: View {
     @State private var viewModel = WeatherViewModel()
     
@@ -15,115 +14,93 @@ struct WeatherScreen: View {
             )
             .ignoresSafeArea()
             
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 24) {
-                    
-                    // MARK: - Error Banner State
-                    if let errorMessage = viewModel.errorMessage {
+            // MARK: - State Machine View Dispatcher
+            switch viewModel.state {
+            case .idle, .loading:
+                WeatherSkeletonView()
+                    .padding(.horizontal, 20)
+                    .transition(.opacity)
+                
+            case .loaded(let weather):
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 24) {
+                        
+                        // 1. Header + Unit Picker
                         HStack {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .foregroundStyle(.yellow)
-                            Text(errorMessage)
-                                .font(.caption)
-                                .foregroundStyle(.primary)
-                            Spacer()
-                            Button("Retry") {
-                                Task {
-                                    await viewModel.retryFetch()
+                            LocationHeaderView(
+                                location: weather.location,
+                                onSearchTapped: {
+                                    viewModel.openSearchSheet()
                                 }
-                            }
-                            .font(.caption)
-                            .fontWeight(.bold)
-                        }
-                        .padding(12)
-                        .background(Color.red.opacity(0.2), in: RoundedRectangle(cornerRadius: 12))
-                    }
-                    
-                    // MARK: 1. Location Header + Temperature Unit Picker
-                    HStack {
-                        LocationHeaderView(
-                            location: viewModel.weather.location,
-                            onSearchTapped: {
-                                viewModel.openSearchSheet()
-                            }
-                        )
-                        
-                        Spacer()
-                        
-                        // Binding TemperatureUnitPicker to viewModel state
-                        TemperatureUnitPicker(
-                            selectedUnit: Binding(
-                                get: { viewModel.selectedUnit },
-                                set: { viewModel.setTemperatureUnit($0) }
                             )
+                            
+                            Spacer()
+                            
+                            TemperatureUnitPicker(
+                                selectedUnit: Binding(
+                                    get: { viewModel.selectedUnit },
+                                    set: { viewModel.setTemperatureUnit($0) }
+                                )
+                            )
+                        }
+                        
+                        // 2. Current Weather Hero Card
+                        CurrentWeatherCard(
+                            current: weather.current,
+                            unit: viewModel.selectedUnit
+                        )
+                        
+                        // 3. Hourly Forecast Section
+                        HourlyForecastSection(
+                            forecasts: weather.hourly,
+                            unit: viewModel.selectedUnit
+                        )
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(Color.white.opacity(0.08))
+                        )
+                        
+                        // 4. Daily Forecast Section
+                        DailyForecastSection(
+                            forecasts: weather.daily,
+                            unit: viewModel.selectedUnit
+                        )
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(Color.white.opacity(0.08))
+                        )
+                        
+                        // 5. Weather Details Grid
+                        WeatherDetailsSection(
+                            current: weather.current,
+                            unit: viewModel.selectedUnit
                         )
                     }
-                    
-                    // MARK: 2. Current Weather Card
-                    CurrentWeatherCard(
-                        current: viewModel.weather.current,
-                        unit: viewModel.selectedUnit
-                    )
-                    
-                    // MARK: 3. Hourly Forecast Section
-                    HourlyForecastSection(
-                        forecasts: viewModel.weather.hourly,
-                        unit: viewModel.selectedUnit
-                    )
-                    .padding(16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .fill(Color.white.opacity(0.08))
-                    )
-                    
-                    // MARK: 4. Daily Forecast Section
-                    DailyForecastSection(
-                        forecasts: viewModel.weather.daily,
-                        unit: viewModel.selectedUnit
-                    )
-                    .padding(16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .fill(Color.white.opacity(0.08))
-                    )
-                    
-                    // MARK: 5. Weather Details Section
-                    WeatherDetailsSection(
-                        current: viewModel.weather.current,
-                        unit: viewModel.selectedUnit
-                    )
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 24)
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 24)
-            }
-            
-            // MARK: - Loading Progress Overlay State
-            if viewModel.isLoading {
-                ZStack {
-                    Color.black.opacity(0.4)
-                        .ignoresSafeArea()
-                    
-                    VStack(spacing: 12) {
-                        ProgressView()
-                            .scaleEffect(1.3)
-                            .tint(.white)
-                        Text("Fetching live weather...")
-                            .font(.subheadline)
-                            .foregroundStyle(.white)
+                .transition(.opacity)
+                
+            case .error(let errorMessage):
+                WeatherErrorView(
+                    message: errorMessage,
+                    onRetry: {
+                        Task {
+                            await viewModel.retryFetch()
+                        }
                     }
-                    .padding(24)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color(white: 0.15))
-                    )
-                }
+                )
+                .transition(.opacity)
             }
         }
-        // MARK: - Async Initializer Intent Trigger
+        .animation(.easeInOut(duration: 0.3), value: viewModel.state)
+        // MARK: - Task Trigger
         .task {
             await viewModel.onAppear()
         }
-        // MARK: - Sheet Presentation State Bound to ViewModel
+        // MARK: - Search Modal Sheet
         .sheet(isPresented: $viewModel.isSearchSheetPresented) {
             SearchView(viewModel: viewModel)
         }
