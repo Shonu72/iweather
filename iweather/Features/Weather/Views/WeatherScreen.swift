@@ -1,21 +1,34 @@
 import SwiftUI
 import SwiftData
 
-/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error) using AppTheme design system & fluid animations.
+/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error) using WeatherTheme & WeatherParticleCanvas.
 struct WeatherScreen: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var savedCities: [SavedCity]
     @State private var viewModel = WeatherViewModel()
     
+    private var currentTheme: WeatherTheme {
+        if case .loaded(let weather) = viewModel.state {
+            return weather.current.condition.theme
+        }
+        return WeatherCondition.sunny.theme
+    }
+    
     var body: some View {
         ZStack {
-            // Dark gradient background canvas from AppTheme
+            // MARK: - Dynamic Adaptive Weather Gradient Background
             LinearGradient(
-                colors: [AppTheme.Colors.backgroundGradientStart, AppTheme.Colors.backgroundGradientEnd],
+                colors: currentTheme.backgroundGradient,
                 startPoint: .top,
                 endPoint: .bottom
             )
             .ignoresSafeArea()
+            .animation(.easeInOut(duration: 0.6), value: currentTheme.backgroundGradient)
+            
+            // MARK: - Dynamic Ambient Particle Canvas Overlay
+            if case .loaded(let weather) = viewModel.state {
+                WeatherParticleCanvas(condition: weather.current.condition)
+            }
             
             // MARK: - State Machine View Dispatcher
             switch viewModel.state {

