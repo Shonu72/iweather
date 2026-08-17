@@ -5,7 +5,7 @@ import Foundation
 struct GeocodingRequest: APIRequest {
     typealias Response = GeocodingResponseDTO
     
-    let host = "geocoding-api.open-meteo.com"
+    let host = AppConfig.geocodingAPIBaseURL
     let path = "/v1/search"
     let queryItems: [URLQueryItem]?
     
@@ -22,7 +22,7 @@ struct GeocodingRequest: APIRequest {
 struct ForecastRequest: APIRequest {
     typealias Response = OpenMeteoForecastDTO
     
-    let host = "api.open-meteo.com"
+    let host = AppConfig.weatherAPIBaseURL
     let path = "/v1/forecast"
     let queryItems: [URLQueryItem]?
     

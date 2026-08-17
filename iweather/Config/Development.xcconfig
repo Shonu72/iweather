@@ -1,0 +1,6 @@
+// Development Environment Configuration Settings
+// https://help.apple.com/xcode/mac/current/#/dev745c5c974
+
+WEATHER_API_BASE_URL = api.open-meteo.com
+GEOCODING_API_BASE_URL = geocoding-api.open-meteo.com
+APP_ENVIRONMENT = Development
