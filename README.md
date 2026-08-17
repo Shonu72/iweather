@@ -16,20 +16,6 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
 
 ---
 
-## 🎬 Demo Video
-
-<p align="center">
-  <a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share" target="_blank">
-    <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="25%" alt="iWeather iOS Demo Video" />
-  </a>
-</p>
-
-<p align="center">
-  👉 <b><a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share">Watch full iWeather Demo Video on YouTube</a></b>
-</p>
-
----
-
 ## Features
 
 - **Live Weather & Forecasts**: Real-time current metrics (humidity, wind speed, pressure, UV index, visibility), 24-hour hourly timeline, and 7-day forecast.
@@ -53,6 +39,20 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
 
 <p align="center">
   <img width="879" height="431" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/b95db6aa-e6bd-45b4-bfd0-9c9074a52bb4" />
+</p>
+
+---
+
+## 🎬 Demo Video
+
+<p align="center">
+  <a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share" target="_blank">
+    <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="25%" alt="iWeather iOS Demo Video" />
+  </a>
+</p>
+
+<p align="center">
+  👉 <b><a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share">Watch full iWeather Demo Video on YouTube</a></b>
 </p>
 
 ---
