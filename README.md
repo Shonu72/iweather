@@ -1,4 +1,3 @@
-
 # iWeather
 
 A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST API. Designed with scalable MVVM architecture, dependency injection, offline-first disk caching, and real-time particle canvas effects.
@@ -13,6 +12,20 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
   <img src="https://github.com/user-attachments/assets/0e7aaecf-ffaa-4580-8c41-3b4b5af37a88" width="19%" alt="Search Screen" />
   <img src="https://github.com/user-attachments/assets/5b333ba2-f618-4484-ad30-7c39230422fb" width="19%" alt="Offline Screen" />
   <img src="https://github.com/user-attachments/assets/d8e55b7a-45cd-433c-8dcd-9bc30b90a1d9" width="19%" alt="Saved Cities" />
+</p>
+
+---
+
+## 🎬 Demo Video
+
+<p align="center">
+  <a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share" target="_blank">
+    <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="85%" alt="iWeather iOS Demo Video" />
+  </a>
+</p>
+
+<p align="center">
+  👉 <b><a href="https://youtube.com/shorts/csoAqr9tY7E?feature=share">Watch full iWeather Demo Video on YouTube</a></b>
 </p>
 
 ---
@@ -37,7 +50,9 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
 - **Architecture**: Scalable Layered MVVM
   
 ## Architecture Snapshot
-<img width="879" height="431" alt="Screenshot 2026-08-17 at 3 05 07 PM" src="https://github.com/user-attachments/assets/b95db6aa-e6bd-45b4-bfd0-9c9074a52bb4" />
+
+<p align="center">
+  <img width="879" height="431" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/b95db6aa-e6bd-45b4-bfd0-9c9074a52bb4" />
+</p>
 
 ---
-
