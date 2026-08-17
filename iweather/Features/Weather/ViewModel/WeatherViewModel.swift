@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 /// ViewModel for managing weather UI state, live API fetching, and geocoding location searches.
-/// `@MainActor` guarantees that state updates happen safely on the Main UI thread (similar to Flutter's WidgetsBinding.instance).
+/// `@MainActor` guarantees that UI state updates happen safely on the Main thread.
 @MainActor
 @Observable
 final class WeatherViewModel {
@@ -16,10 +16,10 @@ final class WeatherViewModel {
     private let weatherService: WeatherServiceProtocol
     
     init(
-        weather: Weather = WeatherViewModel.mockData,
+        weather: Weather? = nil,
         weatherService: WeatherServiceProtocol = URLSessionWeatherService()
     ) {
-        self.weather = weather
+        self.weather = weather ?? WeatherViewModel.mockData
         self.weatherService = weatherService
     }
     
@@ -79,13 +79,13 @@ final class WeatherViewModel {
         isSearching = false
     }
     
-    // MARK: - Static Mock Data (Fallback & Preview)
+    // MARK: - Static Mock Data (Non-isolated for thread safety across Previews & Inits)
     
-    static var mockData: Weather {
+    nonisolated static var mockData: Weather {
         mockData(for: "Bhopal")
     }
     
-    static func mockData(for city: String) -> Weather {
+    nonisolated static func mockData(for city: String) -> Weather {
         let mockMap: [String: (country: String, lat: Double, lon: Double, temp: Int, feelsLike: Int, condition: WeatherCondition, high: Int, low: Int, humidity: Int, wind: Double, pressure: Int, uv: Int, vis: Double)] = [
             "Bhopal": ("India", 23.2599, 77.4126, 29, 31, .sunny, 32, 24, 68, 12.0, 1012, 6, 10.0),
             "Mumbai": ("India", 19.0760, 72.8777, 33, 38, .sunny, 35, 27, 82, 16.5, 1008, 8, 8.0),

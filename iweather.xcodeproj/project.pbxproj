@@ -6,28 +6,7 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		38BE4FCC06FD4741AE7BBDC8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 684ECD4652114D44A07BBDC8 /* README.md */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXBuildRule section */
-		FBE72DB108D54700967BBDC8 /* PBXBuildRule */ = {
-			isa = PBXBuildRule;
-			compilerSpec = com.apple.compilers.proxy.script;
-			filePatterns = "*.md";
-			fileType = pattern.proxy;
-			inputFiles = (
-			);
-			isEditable = 0;
-			outputFiles = (
-				"/tmp/${INPUT_FILE_BASE}",
-			);
-			script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"\nsh -c \"${A8CDBB7}\"";
-		};
-/* End PBXBuildRule section */
-
 /* Begin PBXFileReference section */
-		684ECD4652114D44A07BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -61,7 +40,6 @@
 		8EED036D3032D74E00F68C15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				684ECD4652114D44A07BBDC8 /* README.md */,
 				8EED036C3032D74E00F68C15 /* iweather.app */,
 			);
 			name = Products;
@@ -79,7 +57,6 @@
 				8EED036A3032D74E00F68C15 /* Resources */,
 			);
 			buildRules = (
-				FBE72DB108D54700967BBDC8 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -132,7 +109,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38BE4FCC06FD4741AE7BBDC8 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
