@@ -17,6 +17,7 @@ final class WeatherViewModel {
     var isSearching: Bool = false
     
     private let weatherService: WeatherServiceProtocol
+    private let locationManager: LocationManagerProtocol
     
     /// Convenient accessor to extract loaded weather or mock fallback.
     var currentDisplayWeather: Weather {
@@ -30,10 +31,12 @@ final class WeatherViewModel {
     
     init(
         initialState: WeatherState = .idle,
-        weatherService: WeatherServiceProtocol = WeatherService()
+        weatherService: WeatherServiceProtocol = WeatherService(),
+        locationManager: LocationManagerProtocol = LocationManager()
     ) {
         self.state = initialState
         self.weatherService = weatherService
+        self.locationManager = locationManager
     }
     
     // MARK: - User Intent Actions
@@ -41,6 +44,19 @@ final class WeatherViewModel {
     /// Triggered when the view appears on screen.
     func onAppear() async {
         await fetchWeather(for: "Bhopal")
+    }
+    
+    /// Triggered when user requests weather for current GPS location.
+    func fetchCurrentLocationWeather() async {
+        state = .loading
+        
+        do {
+            let currentLocation = try await locationManager.requestCurrentLocation()
+            let liveWeather = try await weatherService.fetchWeather(for: currentLocation)
+            self.state = .loaded(liveWeather)
+        } catch {
+            self.state = .error(error.localizedDescription)
+        }
     }
     
     /// Triggered when user selects a location from search sheet.

