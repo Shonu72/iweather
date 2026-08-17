@@ -1,21 +1,21 @@
 import SwiftUI
 
-/// Component displaying weather icon and primary temperature number formatted for active TemperatureUnit.
+/// Component displaying weather icon and primary temperature number formatted for active TemperatureUnit with smooth numeric transitions.
 struct TemperatureView: View {
-    let systemIconName: String
+    let condition: WeatherCondition
     let temperature: Int
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
-        VStack(spacing: 4) {
-            Image(systemName: systemIconName)
-                .symbolRenderingMode(.multicolor)
-                .font(.system(size: 68))
-                .padding(.vertical, 4)
+        VStack(spacing: AppTheme.Spacing.xxSmall) {
+            AnimatedWeatherIcon(condition: condition, size: 68)
+                .padding(.vertical, AppTheme.Spacing.xxSmall)
             
             Text(unit.formatted(temperature))
-                .font(.system(size: 72, weight: .thin, design: .rounded))
-                .foregroundStyle(.primary)
+                .font(AppTheme.Typography.heroTemp)
+                .foregroundStyle(AppTheme.Colors.textPrimary)
+                .contentTransition(.numericText())
+                .animation(.snappy(duration: 0.4), value: unit.formatted(temperature))
         }
     }
 }
@@ -23,6 +23,6 @@ struct TemperatureView: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        TemperatureView(systemIconName: "sun.max.fill", temperature: 29, unit: .celsius)
+        TemperatureView(condition: .sunny, temperature: 29, unit: .celsius)
     }
 }

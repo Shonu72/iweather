@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error) using AppTheme design system.
+/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error) using AppTheme design system & fluid animations.
 struct WeatherScreen: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var savedCities: [SavedCity]
@@ -83,6 +83,11 @@ struct WeatherScreen: View {
                                 unit: viewModel.selectedUnit
                             )
                         }
+                        .scrollTransition { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1.0 : 0.7)
+                                .scaleEffect(phase.isIdentity ? 1.0 : 0.96)
+                        }
                         
                         // 4. Daily Forecast Section Container
                         AppCardView {
@@ -91,12 +96,22 @@ struct WeatherScreen: View {
                                 unit: viewModel.selectedUnit
                             )
                         }
+                        .scrollTransition { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1.0 : 0.7)
+                                .scaleEffect(phase.isIdentity ? 1.0 : 0.96)
+                        }
                         
                         // 5. Weather Details Grid
                         WeatherDetailsSection(
                             current: weather.current,
                             unit: viewModel.selectedUnit
                         )
+                        .scrollTransition { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1.0 : 0.7)
+                                .scaleEffect(phase.isIdentity ? 1.0 : 0.96)
+                        }
                     }
                     .padding(.horizontal, AppTheme.Spacing.large)
                     .padding(.bottom, AppTheme.Spacing.xLarge)
@@ -115,7 +130,7 @@ struct WeatherScreen: View {
                 .transition(.opacity)
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: viewModel.state)
+        .animation(.easeInOut(duration: 0.35), value: viewModel.state)
         // MARK: - Task Trigger
         .task {
             await viewModel.onAppear()

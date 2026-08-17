@@ -6,20 +6,18 @@ struct HourlyWeatherCard: View {
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: AppTheme.Spacing.xSmall) {
             Text(forecast.time)
-                .font(.subheadline)
-                .fontWeight(.medium)
-                .foregroundStyle(.primary)
+                .font(AppTheme.Typography.captionSmall)
+                .foregroundStyle(AppTheme.Colors.textPrimary)
             
-            Image(systemName: forecast.condition.systemIconName)
-                .symbolRenderingMode(.multicolor)
-                .font(.title2)
+            AnimatedWeatherIcon(condition: forecast.condition, size: 28)
                 .frame(height: 28)
             
             Text(unit.formatted(forecast.temperature))
-                .font(.headline)
-                .foregroundStyle(.primary)
+                .font(AppTheme.Typography.sectionHeader)
+                .foregroundStyle(AppTheme.Colors.textPrimary)
+                .contentTransition(.numericText())
         }
     }
 }

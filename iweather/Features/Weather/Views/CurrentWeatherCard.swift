@@ -6,9 +6,9 @@ struct CurrentWeatherCard: View {
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: AppTheme.Spacing.xSmall) {
             TemperatureView(
-                systemIconName: current.condition.systemIconName,
+                condition: current.condition,
                 temperature: current.temperature,
                 unit: unit
             )
@@ -21,7 +21,7 @@ struct CurrentWeatherCard: View {
             )
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
+        .padding(.vertical, AppTheme.Spacing.xSmall)
     }
 }
 

