@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error).
+/// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error) using AppTheme design system.
 struct WeatherScreen: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var savedCities: [SavedCity]
@@ -9,9 +9,9 @@ struct WeatherScreen: View {
     
     var body: some View {
         ZStack {
-            // Dark gradient background canvas
+            // Dark gradient background canvas from AppTheme
             LinearGradient(
-                colors: [Color(white: 0.1), Color(white: 0.05)],
+                colors: [AppTheme.Colors.backgroundGradientStart, AppTheme.Colors.backgroundGradientEnd],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -21,26 +21,25 @@ struct WeatherScreen: View {
             switch viewModel.state {
             case .idle, .loading:
                 WeatherSkeletonView()
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, AppTheme.Spacing.large)
                     .transition(.opacity)
                 
             case .loaded(let weather):
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 24) {
+                    VStack(spacing: AppTheme.Spacing.xLarge) {
                         
                         // MARK: - Offline Mode Banner Indicator
                         if weather.isFromCache {
-                            HStack(spacing: 8) {
+                            HStack(spacing: AppTheme.Spacing.xSmall) {
                                 Image(systemName: "wifi.slash")
-                                    .foregroundStyle(.orange)
+                                    .foregroundStyle(AppTheme.Colors.offlineOrange)
                                 Text("Offline Mode — Showing Cached Weather")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
-                                    .foregroundStyle(.primary)
+                                    .font(AppTheme.Typography.captionSmall)
+                                    .foregroundStyle(AppTheme.Colors.textPrimary)
                                 Spacer()
                             }
-                            .padding(10)
-                            .background(Color.orange.opacity(0.2), in: RoundedRectangle(cornerRadius: 10))
+                            .padding(AppTheme.Spacing.small)
+                            .background(AppTheme.Colors.offlineOrange.opacity(0.2), in: RoundedRectangle(cornerRadius: AppTheme.CornerRadius.medium))
                         }
                         
                         // 1. Header + Bookmark Toggle + Unit Picker
@@ -77,27 +76,21 @@ struct WeatherScreen: View {
                             unit: viewModel.selectedUnit
                         )
                         
-                        // 3. Hourly Forecast Section
-                        HourlyForecastSection(
-                            forecasts: weather.hourly,
-                            unit: viewModel.selectedUnit
-                        )
-                        .padding(16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(Color.white.opacity(0.08))
-                        )
+                        // 3. Hourly Forecast Section Container
+                        AppCardView {
+                            HourlyForecastSection(
+                                forecasts: weather.hourly,
+                                unit: viewModel.selectedUnit
+                            )
+                        }
                         
-                        // 4. Daily Forecast Section
-                        DailyForecastSection(
-                            forecasts: weather.daily,
-                            unit: viewModel.selectedUnit
-                        )
-                        .padding(16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(Color.white.opacity(0.08))
-                        )
+                        // 4. Daily Forecast Section Container
+                        AppCardView {
+                            DailyForecastSection(
+                                forecasts: weather.daily,
+                                unit: viewModel.selectedUnit
+                            )
+                        }
                         
                         // 5. Weather Details Grid
                         WeatherDetailsSection(
@@ -105,8 +98,8 @@ struct WeatherScreen: View {
                             unit: viewModel.selectedUnit
                         )
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, AppTheme.Spacing.large)
+                    .padding(.bottom, AppTheme.Spacing.xLarge)
                 }
                 .transition(.opacity)
                 

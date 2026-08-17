@@ -1,17 +1,17 @@
 import SwiftUI
 
-/// Section displaying 7-day weather forecast list consuming DailyForecastItem domain models.
+/// Section displaying 7-day weather forecast list consuming DailyForecastItem domain models and AppTheme tokens.
 struct DailyForecastSection: View {
     let forecasts: [DailyForecastItem]
     var unit: TemperatureUnit = .celsius
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: AppTheme.Spacing.small) {
             Text("7 Day Forecast")
-                .font(.headline)
-                .foregroundStyle(.secondary)
+                .font(AppTheme.Typography.sectionHeader)
+                .foregroundStyle(AppTheme.Colors.textSecondary)
             
-            VStack(spacing: 12) {
+            VStack(spacing: AppTheme.Spacing.small) {
                 ForEach(forecasts) { item in
                     DailyWeatherRow(
                         forecast: item,
@@ -27,7 +27,9 @@ struct DailyForecastSection: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        DailyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").daily, unit: .celsius)
-            .padding()
+        AppCardView {
+            DailyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").daily, unit: .celsius)
+        }
+        .padding()
     }
 }
