@@ -39,7 +39,7 @@ struct HourlyForecastView: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        HourlyForecastView(forecasts: WeatherViewModel.mockData.hourlyForecasts)
+        HourlyForecastView(forecasts: WeatherViewModel.mockData(for: "Bhopal").hourlyForecasts)
             .padding()
     }
 }

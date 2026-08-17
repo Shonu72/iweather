@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Section displaying 7-day weather forecast list using DailyWeatherRow.
+/// Section displaying 7-day weather forecast list formatted for active unit.
 struct DailyForecastSection: View {
     let forecasts: [DailyForecast]
+    var unit: TemperatureUnit = .celsius
     
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -14,7 +15,8 @@ struct DailyForecastSection: View {
                 ForEach(forecasts) { item in
                     DailyWeatherRow(
                         forecast: item,
-                        showDivider: item.id != forecasts.last?.id
+                        showDivider: item.id != forecasts.last?.id,
+                        unit: unit
                     )
                 }
             }
@@ -25,7 +27,7 @@ struct DailyForecastSection: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        DailyForecastSection(forecasts: WeatherViewModel.mockData.dailyForecasts)
+        DailyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").dailyForecasts, unit: .celsius)
             .padding()
     }
 }

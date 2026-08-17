@@ -55,7 +55,7 @@ struct WeatherDetailsSection: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        WeatherDetailsSection(details: WeatherViewModel.mockData.details)
+        WeatherDetailsSection(details: WeatherViewModel.mockData(for: "Bhopal").details)
             .padding()
     }
 }

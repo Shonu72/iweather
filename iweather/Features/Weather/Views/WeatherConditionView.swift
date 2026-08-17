@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// Component displaying condition text ("Sunny") and High/Low temperature range.
+/// Component displaying condition text ("Sunny") and High/Low temperature range formatted for active unit.
 struct WeatherConditionView: View {
     let condition: String
     let highTemperature: Int
     let lowTemperature: Int
+    var unit: TemperatureUnit = .celsius
     
     var body: some View {
         VStack(spacing: 4) {
@@ -13,7 +14,7 @@ struct WeatherConditionView: View {
                 .fontWeight(.medium)
                 .foregroundStyle(.secondary)
             
-            Text("H: \(highTemperature)°   L: \(lowTemperature)°")
+            Text("H: \(unit.formatted(highTemperature))   L: \(unit.formatted(lowTemperature))")
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundStyle(.secondary)
@@ -24,6 +25,6 @@ struct WeatherConditionView: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        WeatherConditionView(condition: "Sunny", highTemperature: 32, lowTemperature: 24)
+        WeatherConditionView(condition: "Sunny", highTemperature: 32, lowTemperature: 24, unit: .celsius)
     }
 }

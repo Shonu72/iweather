@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Component representing a single hour forecast item (Time, Icon, Temp).
+/// Component representing a single hour forecast item formatted for active TemperatureUnit.
 struct HourlyWeatherCard: View {
     let forecast: HourlyForecast
+    var unit: TemperatureUnit = .celsius
     
     var body: some View {
         VStack(spacing: 8) {
@@ -16,7 +17,7 @@ struct HourlyWeatherCard: View {
                 .font(.title2)
                 .frame(height: 28)
             
-            Text("\(forecast.temperature)°")
+            Text(unit.formatted(forecast.temperature))
                 .font(.headline)
                 .foregroundStyle(.primary)
         }
@@ -27,7 +28,8 @@ struct HourlyWeatherCard: View {
     ZStack {
         Color.black.ignoresSafeArea()
         HourlyWeatherCard(
-            forecast: HourlyForecast(time: "12 PM", systemIconName: "sun.max.fill", temperature: 29)
+            forecast: HourlyForecast(time: "12 PM", systemIconName: "sun.max.fill", temperature: 29),
+            unit: .celsius
         )
         .padding()
     }

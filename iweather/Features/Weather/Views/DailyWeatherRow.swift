@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// Component representing a single row in the daily forecast list.
+/// Component representing a single row in the daily forecast list formatted for active unit.
 struct DailyWeatherRow: View {
     let forecast: DailyForecast
     let showDivider: Bool
+    var unit: TemperatureUnit = .celsius
     
     var body: some View {
         VStack(spacing: 12) {
@@ -22,7 +23,7 @@ struct DailyWeatherRow: View {
                 
                 Spacer()
                 
-                Text("\(forecast.highTemperature)°  /  \(forecast.lowTemperature)°")
+                Text("\(unit.formatted(forecast.highTemperature))  /  \(unit.formatted(forecast.lowTemperature))")
                     .font(.body)
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
@@ -41,7 +42,8 @@ struct DailyWeatherRow: View {
         Color.black.ignoresSafeArea()
         DailyWeatherRow(
             forecast: DailyForecast(day: "Mon", systemIconName: "sun.max.fill", highTemperature: 30, lowTemperature: 24),
-            showDivider: true
+            showDivider: true,
+            unit: .celsius
         )
         .padding()
     }

@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Section displaying hourly forecasts with header and horizontal scroll list.
+/// Section displaying hourly forecasts formatted for active unit.
 struct HourlyForecastSection: View {
     let forecasts: [HourlyForecast]
+    var unit: TemperatureUnit = .celsius
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -13,7 +14,7 @@ struct HourlyForecastSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 24) {
                     ForEach(forecasts) { item in
-                        HourlyWeatherCard(forecast: item)
+                        HourlyWeatherCard(forecast: item, unit: unit)
                     }
                 }
                 .padding(.vertical, 4)
@@ -25,7 +26,7 @@ struct HourlyForecastSection: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        HourlyForecastSection(forecasts: WeatherViewModel.mockData.hourlyForecasts)
+        HourlyForecastSection(forecasts: WeatherViewModel.mockData(for: "Bhopal").hourlyForecasts, unit: .celsius)
             .padding()
     }
 }

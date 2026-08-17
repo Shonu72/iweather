@@ -48,7 +48,7 @@ struct DailyForecastView: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        DailyForecastView(forecasts: WeatherViewModel.mockData.dailyForecasts)
+        DailyForecastView(forecasts: WeatherViewModel.mockData(for: "Bhopal").dailyForecasts)
             .padding()
     }
 }
