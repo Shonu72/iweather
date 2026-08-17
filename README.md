@@ -8,11 +8,11 @@ A native iOS weather app built with SwiftUI, SwiftData, and the Open-Meteo REST 
 ## Snapshots
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="20%" alt="Weather Screen 1" />
-  <img src="https://github.com/user-attachments/assets/d6d49d75-79cb-4143-a056-95565a89acd8" width="20%" alt="Weather Screen 2" />
-  <img src="https://github.com/user-attachments/assets/0e7aaecf-ffaa-4580-8c41-3b4b5af37a88" width="20%" alt="Search Screen" />
-  <img src="https://github.com/user-attachments/assets/5b333ba2-f618-4484-ad30-7c39230422fb" width="20%" alt="Offline Screen" />
-  <img src="https://github.com/user-attachments/assets/d8e55b7a-45cd-433c-8dcd-9bc30b90a1d9" width="20%" alt="Saved Cities" />
+  <img src="https://github.com/user-attachments/assets/4089e8c2-9758-4a46-b09c-445da988b1fd" width="19%" alt="Weather Screen 1" />
+  <img src="https://github.com/user-attachments/assets/d6d49d75-79cb-4143-a056-95565a89acd8" width="19%" alt="Weather Screen 2" />
+  <img src="https://github.com/user-attachments/assets/0e7aaecf-ffaa-4580-8c41-3b4b5af37a88" width="19%" alt="Search Screen" />
+  <img src="https://github.com/user-attachments/assets/5b333ba2-f618-4484-ad30-7c39230422fb" width="19%" alt="Offline Screen" />
+  <img src="https://github.com/user-attachments/assets/d8e55b7a-45cd-433c-8dcd-9bc30b90a1d9" width="19%" alt="Saved Cities" />
 </p>
 
 ---
