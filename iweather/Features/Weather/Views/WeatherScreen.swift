@@ -1,7 +1,10 @@
 import SwiftUI
+import SwiftData
 
 /// Main Weather Screen pattern matching on WeatherState enum (.idle, .loading, .loaded, .error).
 struct WeatherScreen: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var savedCities: [SavedCity]
     @State private var viewModel = WeatherViewModel()
     
     var body: some View {
@@ -25,10 +28,11 @@ struct WeatherScreen: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
                         
-                        // 1. Header + Unit Picker
+                        // 1. Header + Bookmark Toggle + Unit Picker
                         HStack {
                             LocationHeaderView(
                                 location: weather.location,
+                                isBookmarked: isCitySaved(location: weather.location),
                                 onSearchTapped: {
                                     viewModel.openSearchSheet()
                                 },
@@ -36,6 +40,9 @@ struct WeatherScreen: View {
                                     Task {
                                         await viewModel.fetchCurrentLocationWeather()
                                     }
+                                },
+                                onBookmarkTapped: {
+                                    toggleBookmark(location: weather.location)
                                 }
                             )
                             
@@ -111,8 +118,35 @@ struct WeatherScreen: View {
         }
         .preferredColorScheme(.dark)
     }
+    
+    // MARK: - SwiftData Helpers
+    
+    private func isCitySaved(location: WeatherLocation) -> Bool {
+        savedCities.contains {
+            $0.city.lowercased() == location.city.lowercased() &&
+            $0.country.lowercased() == location.country.lowercased()
+        }
+    }
+    
+    private func toggleBookmark(location: WeatherLocation) {
+        if let existing = savedCities.first(where: {
+            $0.city.lowercased() == location.city.lowercased() &&
+            $0.country.lowercased() == location.country.lowercased()
+        }) {
+            modelContext.delete(existing)
+        } else {
+            let newCity = SavedCity(
+                city: location.city,
+                country: location.country,
+                latitude: location.latitude,
+                longitude: location.longitude
+            )
+            modelContext.insert(newCity)
+        }
+    }
 }
 
 #Preview {
     WeatherScreen()
+        .modelContainer(for: SavedCity.self, inMemory: true)
 }

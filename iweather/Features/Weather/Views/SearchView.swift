@@ -1,9 +1,13 @@
 import SwiftUI
+import SwiftData
 
-/// Search modal sheet consuming WeatherViewModel in MVVM architecture.
+/// Search modal sheet consuming WeatherViewModel and SwiftData SavedCity model.
 struct SearchView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @Bindable var viewModel: WeatherViewModel
+    
+    @Query(sort: \SavedCity.dateAdded, order: .reverse) private var savedCities: [SavedCity]
     
     private let defaultCities = [
         WeatherLocation(city: "Bhopal", country: "India", latitude: 23.2599, longitude: 77.4126),
@@ -37,7 +41,17 @@ struct SearchView: View {
                     }
                 }
                 
-                // MARK: 2. Dynamic Search Results / Loading / Empty States
+                // MARK: 2. Saved Cities Section (SwiftData @Query)
+                if viewModel.searchQuery.isEmpty && !savedCities.isEmpty {
+                    Section("Saved Cities (\(savedCities.count))") {
+                        ForEach(savedCities) { savedItem in
+                            locationRow(location: savedItem.asWeatherLocation)
+                        }
+                        .onDelete(perform: deleteSavedCities)
+                    }
+                }
+                
+                // MARK: 3. Search Results / Popular Cities / Empty States
                 if viewModel.isSearching {
                     Section {
                         HStack(spacing: 12) {
@@ -85,6 +99,13 @@ struct SearchView: View {
         }
     }
     
+    private func deleteSavedCities(offsets: IndexSet) {
+        for index in offsets {
+            let itemToDelete = savedCities[index]
+            modelContext.delete(itemToDelete)
+        }
+    }
+    
     @ViewBuilder
     private func locationRow(location: WeatherLocation) -> some View {
         Button {
@@ -121,4 +142,5 @@ struct SearchView: View {
 
 #Preview {
     SearchView(viewModel: WeatherViewModel())
+        .modelContainer(for: SavedCity.self, inMemory: true)
 }

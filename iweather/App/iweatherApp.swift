@@ -1,11 +1,5 @@
-//
-//  iweatherApp.swift
-//  iweather
-//
-//  Created by Shourya Sonu on 17/08/26.
-//
-
 import SwiftUI
+import SwiftData
 
 @main
 struct iweatherApp: App {
@@ -13,6 +7,6 @@ struct iweatherApp: App {
         WindowGroup {
             WeatherScreen()
         }
+        .modelContainer(for: SavedCity.self)
     }
 }
-
