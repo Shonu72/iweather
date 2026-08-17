@@ -17,6 +17,7 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             List {
+                // MARK: 1. Quick GPS Current Location Button
                 Section {
                     Button {
                         Task {
@@ -36,7 +37,19 @@ struct SearchView: View {
                     }
                 }
                 
-                if viewModel.searchQuery.isEmpty {
+                // MARK: 2. Dynamic Search Results / Loading / Empty States
+                if viewModel.isSearching {
+                    Section {
+                        HStack(spacing: 12) {
+                            ProgressView()
+                                .tint(.blue)
+                            Text("Searching cities...")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, 8)
+                    }
+                } else if viewModel.searchQuery.isEmpty {
                     Section("Popular Cities") {
                         ForEach(defaultCities, id: \.city) { location in
                             locationRow(location: location)
@@ -56,9 +69,7 @@ struct SearchView: View {
             }
             .searchable(text: $viewModel.searchQuery, prompt: "Search city name...")
             .onChange(of: viewModel.searchQuery) { _, newQuery in
-                Task {
-                    await viewModel.updateSearchQuery(newQuery)
-                }
+                viewModel.updateSearchQuery(newQuery)
             }
             .navigationTitle("Select Location")
             .navigationBarTitleDisplayMode(.inline)

@@ -19,6 +19,8 @@ final class WeatherViewModel {
     private let weatherService: WeatherServiceProtocol
     private let locationManager: LocationManagerProtocol
     
+    private var searchTask: Task<Void, Never>?
+    
     /// Convenient accessor to extract loaded weather or mock fallback.
     var currentDisplayWeather: Weather {
         switch state {
@@ -67,24 +69,41 @@ final class WeatherViewModel {
         await fetchWeather(for: location)
     }
     
-    /// Triggered when user types in search query textfield.
-    func updateSearchQuery(_ query: String) async {
+    /// Triggered when user types in search query textfield. Uses Task cancellation + Task.sleep (350ms) debouncing.
+    func updateSearchQuery(_ query: String) {
         self.searchQuery = query
-        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        
+        // 1. Cancel previous pending search task
+        searchTask?.cancel()
+        
+        let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedQuery.isEmpty else {
             self.searchResults = []
+            self.isSearching = false
             return
         }
         
-        isSearching = true
+        self.isSearching = true
         
-        do {
-            let results = try await weatherService.searchLocations(query: query)
-            self.searchResults = results
-        } catch {
-            self.searchResults = []
+        // 2. Schedule 350ms debounced task
+        searchTask = Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 350_000_000)
+            
+            guard !Task.isCancelled else { return }
+            
+            do {
+                let results = try await weatherService.searchLocations(query: trimmedQuery)
+                if !Task.isCancelled {
+                    self.searchResults = results
+                    self.isSearching = false
+                }
+            } catch {
+                if !Task.isCancelled {
+                    self.searchResults = []
+                    self.isSearching = false
+                }
+            }
         }
-        
-        isSearching = false
     }
     
     /// Triggered when user toggles °C / °F unit picker.
@@ -108,9 +127,11 @@ final class WeatherViewModel {
     
     /// Triggered when user closes search sheet.
     func closeSearchSheet() {
+        searchTask?.cancel()
         isSearchSheetPresented = false
         searchQuery = ""
         searchResults = []
+        isSearching = false
     }
     
     // MARK: - Private API Data Fetching
